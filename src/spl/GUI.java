@@ -1,8 +1,17 @@
 package spl;
 
-import java.awt.*;
-import java.awt.event.*;
+import spl.services.FileConstants;
+import spl.services.FileReader;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class GUI {
    // Connect status constants
@@ -24,7 +33,7 @@ public class GUI {
    public static int connectionStatus = DISCONNECTED;
    public static boolean isHost = true;
    public static Client user = new Client(hostIP, port, "Bob");
-   
+   private static final Logger logger = Logger.getLogger(GUI.class.getName());
 
    private static JPanel initOptionsPane() {
       ActionAdapter buttonListener = null;
@@ -121,8 +130,21 @@ public class GUI {
       mainFrame.setVisible(true);
    }
 
+   private static void updateChat() {
+       while (true) {
+           List<String> chatLines = FileReader.readAll(FileConstants.FILE_NAME);
+           chatText.setText(String.join("", chatLines));
+           try {
+               Thread.sleep(1000);
+           } catch (InterruptedException e) {
+               logger.log(Level.WARNING, "Could not update chat", e);
+           }
+       }
+   }
+
    public static void main(String args[]) {
       initGUI();
+      updateChat();
    }
 }
 

@@ -135,6 +135,6 @@ public class Main {
 
 	public static void log(String aString)
 	{
-		logger.info(aString);
+//		logger.info(aString);
 	}
 }
