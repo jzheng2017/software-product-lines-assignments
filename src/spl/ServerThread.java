@@ -5,31 +5,30 @@ import java.net.*;
  
 
 public class ServerThread extends Thread {
-    private Socket socket;
+    private Socket skt;
  
     public ServerThread(Socket socket) {
-        this.socket = socket;
+        skt = socket;
     }
  
     public void run() {
         try {
-            InputStream input = socket.getInputStream();
+            InputStream input = skt.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
  
-            OutputStream output = socket.getOutputStream();
+            OutputStream output = skt.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
- 
  
             String text;
  
             do {
                 text = reader.readLine();
-                String reverseText = new StringBuilder(text).reverse().toString();
-                writer.println("Server: " + reverseText);
+                writer.println("Je bericht is ontvangen");
+                System.out.println("Bericht ontvangen: " + text);
  
-            } while (!text.equals("bye"));
+            } while (skt.isConnected());
  
-            socket.close();
+            
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
             ex.printStackTrace();

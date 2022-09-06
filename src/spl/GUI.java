@@ -1,7 +1,5 @@
 package spl;
 
-import java.lang.*;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -29,7 +27,6 @@ public class GUI {
    
 
    private static JPanel initOptionsPane() {
-      JPanel pane = null;
       ActionAdapter buttonListener = null;
 
       // Create an options pane
@@ -97,6 +94,12 @@ public class GUI {
          JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
       chatLine = new JTextField();
+      chatLine.addActionListener(new ActionListener() {
+    	    @Override
+    	    public void actionPerformed(ActionEvent e) {
+    	       user.sendMessage(chatLine.getText());
+    	    }
+    	});
       chatLine.setEnabled(false);
       chatPane.add(chatLine, BorderLayout.SOUTH);
       chatPane.add(chatTextPane, BorderLayout.CENTER);
