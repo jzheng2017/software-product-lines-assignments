@@ -15,19 +15,21 @@ public class ClientThread implements Runnable
     
     public void run()  
     {
-        while(true)
-        {
-        	try {
-                InputStream input = skt.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+    	try {
+            InputStream input = skt.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-                String message = reader.readLine();
+            String message;
+            
+            do {
+                message = reader.readLine();
+                System.out.println("Server message: " + message);
+ 
+            } while (skt.isConnected());
 
-                System.out.println(message);
-        	}
-            catch (Exception e){
-            	System.out.println(e);
-            }
-         }
-      }
+    	}
+        catch (Exception e){
+        	System.out.println(e);
+        }
+     }
 }

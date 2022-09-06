@@ -19,15 +19,14 @@ public class ServerThread extends Thread {
             OutputStream output = skt.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
  
-            String text;
+            String message;
  
             do {
-                text = reader.readLine();
+            	message = reader.readLine();
                 writer.println("Je bericht is ontvangen");
-                System.out.println("Bericht ontvangen: " + text);
+                System.out.println("Bericht ontvangen: " + message);
  
             } while (skt.isConnected());
- 
             
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
