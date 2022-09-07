@@ -48,7 +48,7 @@ public class GUI {
    private static final Logger logger = Logger.getLogger(GUI.class.getName());
    private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
    
-   public static Color usernameColor = Color.red;
+   public static String usernameColor = "Red";
 
 
    private static JPanel initOptionsPane() {
@@ -100,16 +100,13 @@ public class GUI {
       final JComboBox<String> cb = new JComboBox<String>(choices);
       cb.addActionListener( new ActionListener() {
           public void actionPerformed( ActionEvent e ) {
-        	  String colorString = (String) cb.getSelectedItem();
-              if(colorString == "Red") {
-                  usernameColor = Color.red; 
-              }
-              else if (colorString == "Green") {
-                  usernameColor = Color.green; 
-              }
-              else if (colorString == "Blue") {
-                  usernameColor = Color.blue; 
-              }
+        	  usernameColor = (String) cb.getSelectedItem();
+				/*
+				 * String colorString = (String) cb.getSelectedItem();
+				 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
+				 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
+				 * { usernameColor = Color.blue; }
+				 */
           }
       });
       cb.setVisible(true);
@@ -143,7 +140,7 @@ public class GUI {
       chatLine.addActionListener(new ActionListener() {
     	    @Override
     	    public void actionPerformed(ActionEvent e) {
-    	       user.sendMessage(chatLine.getText());
+    	       user.sendMessage("[" + usernameColor + "]: " + chatLine.getText());
     	    }
     	});
       chatLine.setEnabled(false);
@@ -171,7 +168,6 @@ public class GUI {
        while (true) {
            List<String> chatLines = chatService.readAll();
            chatText.setText(String.join("\n", chatLines));
-           chatText.setForeground(usernameColor);
            try {
                Thread.sleep(1000);
            } catch (InterruptedException e) {
