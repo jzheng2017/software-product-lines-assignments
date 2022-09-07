@@ -1,7 +1,9 @@
 package spl;
 
+import spl.services.AuthenticationService;
 import spl.services.ChatService;
 import spl.services.FileLogService;
+import spl.services.PasswordAuthenticationService;
 import spl.services.SimpleEncryptionService;
 
 import java.awt.*;
@@ -12,10 +14,11 @@ import java.net.*;
 public class ServerThread extends Thread {
     private Socket skt;
     private ChatService chatService;
-
+    private AuthenticationService authenticationService;
     public ServerThread(Socket socket) {
         skt = socket;
         chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
+        authenticationService = new PasswordAuthenticationService();
     }
  
     public void run() {
@@ -33,6 +36,12 @@ public class ServerThread extends Thread {
 
                 if (message == null) {
                     skt.close();
+                    break;
+                }
+
+                if (message.startsWith("/auth")) {
+                    message = message.substring(message.indexOf("/auth") + "/auth".length()).trim();
+                    writer.println(authenticationService.authenticate(message));
                     break;
                 }
 

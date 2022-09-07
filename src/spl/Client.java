@@ -2,11 +2,14 @@ package spl;
 
 import java.net.*;
 import java.io.*;
- 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Client {
-	
-	private String hostname;
+    private static final Logger logger = Logger.getLogger(Client.class.getName());
+    public static boolean IS_AUTHENTICATED = false;
+    private String hostname;
 	private int port;
 	private Socket skt;
 	
@@ -35,14 +38,17 @@ public class Client {
     }
     
     public void sendMessage(String message) {
-    	try {
-            OutputStream output = skt.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            writer.println(message);
-    	}
-    	catch (Exception e) {
-    		System.out.println(e);
-    	}
+        if (IS_AUTHENTICATED || message.startsWith("/auth")) {
+            try {
+                OutputStream output = skt.getOutputStream();
+                PrintWriter writer = new PrintWriter(output, true);
+                writer.println(message);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else {
+            logger.log(Level.WARNING, "You are not authenticated to send messages");
+        }
     }
     
     public void disconnect() {

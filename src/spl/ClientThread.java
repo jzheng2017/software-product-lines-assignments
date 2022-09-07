@@ -23,6 +23,9 @@ public class ClientThread implements Runnable
             
             do {
                 message = reader.readLine();
+                if (message.equals("true")) {
+                    Client.IS_AUTHENTICATED = true;
+                }
                 System.out.println("Server message: " + message);
  
             } while (skt.isConnected());

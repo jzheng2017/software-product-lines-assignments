@@ -9,9 +9,9 @@ import java.net.*;
  
 
 public class Server {
-	
+	private static ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
 	static public void startServer(int port) {
-        new ChatService(new FileLogService(), new SimpleEncryptionService()).clearChatLogs();
+        chatService.clearChatLogs();
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  

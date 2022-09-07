@@ -47,9 +47,8 @@ public class GUI {
    public static Client user = new Client(hostIP, port, "Bob");
    private static final Logger logger = Logger.getLogger(GUI.class.getName());
    private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
-   
-   public static String usernameColor = "Red";
 
+   public static String usernameColor = "Red";
 
    private static JPanel initOptionsPane() {
       ActionAdapter buttonListener = null;
@@ -166,8 +165,12 @@ public class GUI {
 
    private static void updateChat() {
        while (true) {
-           List<String> chatLines = chatService.readAll();
-           chatText.setText(String.join("\n", chatLines));
+           if (Client.IS_AUTHENTICATED) {
+               List<String> chatLines = chatService.readAll();
+               chatText.setText(String.join("\n", chatLines));
+           } else {
+               logger.log(Level.WARNING, "You are not authenticated to read the chat logs!");
+           }
            try {
                Thread.sleep(1000);
            } catch (InterruptedException e) {
