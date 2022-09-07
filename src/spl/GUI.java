@@ -4,6 +4,7 @@ import spl.services.ChatService;
 import spl.services.FileConstants;
 import spl.services.FileLogService;
 import spl.services.FileReader;
+import spl.services.SimpleEncryptionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +37,7 @@ public class GUI {
    public static boolean isHost = true;
    public static Client user = new Client(hostIP, port, "Bob");
    private static final Logger logger = Logger.getLogger(GUI.class.getName());
-   private static final ChatService chatService = new ChatService(new FileLogService());
+   private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
 
    private static JPanel initOptionsPane() {
       ActionAdapter buttonListener = null;

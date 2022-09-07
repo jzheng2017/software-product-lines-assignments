@@ -2,6 +2,7 @@ package spl;
 
 import spl.services.ChatService;
 import spl.services.FileLogService;
+import spl.services.SimpleEncryptionService;
 
 import java.awt.*;
 import java.io.*;
@@ -14,7 +15,7 @@ public class ServerThread extends Thread {
 
     public ServerThread(Socket socket) {
         skt = socket;
-        chatService = new ChatService(new FileLogService());
+        chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
     }
  
     public void run() {
