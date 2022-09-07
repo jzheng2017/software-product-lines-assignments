@@ -6,6 +6,11 @@ import spl.services.FileLogService;
 import spl.services.FileReader;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,11 +28,15 @@ public class GUI {
 
    // Various GUI components and info
    public static JFrame mainFrame = null;
-   public static JTextArea chatText = null;
+   public static JTextPane chatText = null;
    public static JTextField chatLine = null;
    public static JLabel statusBar = null;
    public static JButton connectButton = null;
    public static JButton disconnectButton = null;
+   public static JButton redButton = null;
+   public static JButton greenButton = null;
+   public static JButton blueButton = null;
+   
 
    // Connection info
    public static String hostIP = "localhost";
@@ -37,6 +46,8 @@ public class GUI {
    public static Client user = new Client(hostIP, port, "Bob");
    private static final Logger logger = Logger.getLogger(GUI.class.getName());
    private static final ChatService chatService = new ChatService(new FileLogService());
+   
+   public static Color usernameColor = Color.red;
 
    private static JPanel initOptionsPane() {
       ActionAdapter buttonListener = null;
@@ -81,8 +92,29 @@ public class GUI {
       disconnectButton.setActionCommand("disconnect");
       disconnectButton.addActionListener(buttonListener);
       disconnectButton.setEnabled(false);
+
+
+      String[] choices = { "Red", "Green", "Blue"};
+      final JComboBox<String> cb = new JComboBox<String>(choices);
+      cb.addActionListener( new ActionListener() {
+          public void actionPerformed( ActionEvent e ) {
+        	  String colorString = (String) cb.getSelectedItem();
+              if(colorString == "Red") {
+                  usernameColor = Color.red; 
+              }
+              else if (colorString == "Green") {
+                  usernameColor = Color.green; 
+              }
+              else if (colorString == "Blue") {
+                  usernameColor = Color.blue; 
+              }
+          }
+      });
+      cb.setVisible(true);
+
       buttonPane.add(connectButton);
       buttonPane.add(disconnectButton);
+      optionsPane.add(cb);
       optionsPane.add(buttonPane);
 
       return optionsPane;
@@ -98,8 +130,8 @@ public class GUI {
 
       // Set up the chat pane
       JPanel chatPane = new JPanel(new BorderLayout());
-      chatText = new JTextArea(10, 20);
-      chatText.setLineWrap(true);
+      chatText = new JTextPane();
+      chatText.setPreferredSize(new Dimension(200, 200));
       chatText.setEditable(false);
       chatText.setForeground(Color.blue);
       JScrollPane chatTextPane = new JScrollPane(chatText,
@@ -115,7 +147,7 @@ public class GUI {
       chatLine.setEnabled(false);
       chatPane.add(chatLine, BorderLayout.SOUTH);
       chatPane.add(chatTextPane, BorderLayout.CENTER);
-      chatPane.setPreferredSize(new Dimension(200, 200));
+      chatPane.setPreferredSize(new Dimension(300, 200));
 
       // Set up the main pane
       JPanel mainPane = new JPanel(new BorderLayout());
@@ -136,13 +168,27 @@ public class GUI {
    private static void updateChat() {
        while (true) {
            List<String> chatLines = chatService.readAll();
-           chatText.setText(String.join("", chatLines));
+           chatText.setText(String.join("\n", chatLines));
+           chatText.setForeground(usernameColor);
            try {
                Thread.sleep(1000);
            } catch (InterruptedException e) {
                logger.log(Level.WARNING, "Could not update chat", e);
            }
        }
+   }
+   
+   public void addColoredText(JTextPane pane, String text, Color color) {
+       StyledDocument doc = pane.getStyledDocument();
+
+       Style style = pane.addStyle("Color Style", null);
+       StyleConstants.setForeground(style, color);
+       try {
+           doc.insertString(doc.getLength(), text, style);
+       } 
+       catch (BadLocationException e) {
+           e.printStackTrace();
+       }           
    }
 
    public static void main(String args[]) {
