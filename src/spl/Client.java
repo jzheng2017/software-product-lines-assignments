@@ -6,12 +6,11 @@ import java.io.*;
 
 public class Client {
 	
-	String hostname;
-	int port;
-	Socket skt;
+	private String hostname;
+	private int port;
+	private Socket skt;
 	
-	String username;
-	
+	private String username;
 	public Client(String hname, int prt, String user) {
 		hostname = hname;
 		port = prt;

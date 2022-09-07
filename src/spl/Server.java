@@ -2,6 +2,7 @@ package spl;
 
 import spl.services.ChatService;
 import spl.services.FileLogService;
+import spl.services.SimpleEncryptionService;
 
 import java.io.*;
 import java.net.*;
@@ -10,7 +11,7 @@ import java.net.*;
 public class Server {
 	
 	static public void startServer(int port) {
-        new ChatService(new FileLogService()).clearChatLogs();
+        new ChatService(new FileLogService(), new SimpleEncryptionService()).clearChatLogs();
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  
