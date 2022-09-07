@@ -1,5 +1,8 @@
 package spl;
 
+import spl.services.ChatService;
+import spl.services.FileLogService;
+
 import java.io.*;
 import java.net.*;
  
@@ -7,7 +10,8 @@ import java.net.*;
 public class Server {
 	
 	static public void startServer(int port) {
- 
+        new ChatService(new FileLogService()).clearChatLogs();
+
         try (ServerSocket serverSocket = new ServerSocket(port)) {
  
             System.out.println("Server is listening on port " + port);

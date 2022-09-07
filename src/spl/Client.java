@@ -48,6 +48,7 @@ public class Client {
     
     public void disconnect() {
     	try {
+            System.out.println("disc");
     		skt.close();
     	}
     	catch (Exception e) {

@@ -16,4 +16,8 @@ public class ChatService {
     public List<String> readAll() {
         return FileReader.readAll(FileConstants.FILE_NAME);
     }
+
+    public void clearChatLogs() {
+        FileReader.clearText(FileConstants.FILE_NAME);
+    }
 }
