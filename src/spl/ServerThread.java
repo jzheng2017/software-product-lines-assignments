@@ -39,10 +39,10 @@ public class ServerThread extends Thread {
                     break;
                 }
 
-                if (message.startsWith("/auth")) {
+                if (message.contains("/auth")) {
                     message = message.substring(message.indexOf("/auth") + "/auth".length()).trim();
                     writer.println(authenticationService.authenticate(message));
-                    break;
+                    continue;
                 }
 
                 writer.println("Je bericht is ontvangen");

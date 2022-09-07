@@ -20,11 +20,12 @@ public class ChatService {
         return FileReader
                 .readAll(FileConstants.FILE_NAME)
                 .stream()
+                .filter(line -> !line.isEmpty())
                 .map(line -> encryptionService.decrypt(line))
                 .collect(Collectors.toList());
     }
 
     public void clearChatLogs() {
-        FileReader.clearText(FileConstants.FILE_NAME);
+        logService.clear();
     }
 }

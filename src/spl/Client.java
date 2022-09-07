@@ -38,7 +38,7 @@ public class Client {
     }
     
     public void sendMessage(String message) {
-        if (IS_AUTHENTICATED || message.startsWith("/auth")) {
+        if (IS_AUTHENTICATED || message.contains("/auth")) {
             try {
                 OutputStream output = skt.getOutputStream();
                 PrintWriter writer = new PrintWriter(output, true);

@@ -16,4 +16,13 @@ public class FileLogService implements LogService {
             logger.log(Level.SEVERE, "Could not write to " + FileConstants.FILE_NAME, e);
         }
     }
+
+    @Override
+    public void clear() {
+        try {
+            new FileOutputStream(FileConstants.FILE_NAME).close();
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Could not clear the file contents", e);
+        }
+    }
 }

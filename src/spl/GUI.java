@@ -140,6 +140,7 @@ public class GUI {
     	    @Override
     	    public void actionPerformed(ActionEvent e) {
     	       user.sendMessage("[" + usernameColor + "]: " + chatLine.getText());
+               chatLine.setText("");
     	    }
     	});
       chatLine.setEnabled(false);
@@ -172,7 +173,7 @@ public class GUI {
                logger.log(Level.WARNING, "You are not authenticated to read the chat logs!");
            }
            try {
-               Thread.sleep(1000);
+               Thread.sleep(500);
            } catch (InterruptedException e) {
                logger.log(Level.WARNING, "Could not update chat", e);
            }
