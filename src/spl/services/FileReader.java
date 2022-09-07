@@ -1,5 +1,6 @@
 package spl.services;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,5 +25,13 @@ public class FileReader {
         }
 
         return new ArrayList<>();
+    }
+
+    public static void clearText(String path) {
+        try {
+            new FileOutputStream(path).close();
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Could not clear the file contents", e);
+        }
     }
 }

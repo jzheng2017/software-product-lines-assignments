@@ -132,9 +132,4 @@ public class Main {
 		}
 		return sb.toString();
 	}
-
-	public static void log(String aString)
-	{
-//		logger.info(aString);
-	}
 }

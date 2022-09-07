@@ -29,10 +29,16 @@ public class ServerThread extends Thread {
  
             do {
             	message = reader.readLine();
+
+                if (message == null) {
+                    skt.close();
+                    break;
+                }
+
                 writer.println("Je bericht is ontvangen");
                 System.out.println("Bericht ontvangen: " + message);
                 chatService.sendMessage(message + "\n");
-            } while (skt.isConnected());
+            } while (!skt.isClosed());
             
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
