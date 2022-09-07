@@ -1,6 +1,8 @@
 package spl;
 
+import spl.services.ChatService;
 import spl.services.FileConstants;
+import spl.services.FileLogService;
 import spl.services.FileReader;
 
 import javax.swing.*;
@@ -34,6 +36,7 @@ public class GUI {
    public static boolean isHost = true;
    public static Client user = new Client(hostIP, port, "Bob");
    private static final Logger logger = Logger.getLogger(GUI.class.getName());
+   private static final ChatService chatService = new ChatService(new FileLogService());
 
    private static JPanel initOptionsPane() {
       ActionAdapter buttonListener = null;
@@ -132,7 +135,7 @@ public class GUI {
 
    private static void updateChat() {
        while (true) {
-           List<String> chatLines = FileReader.readAll(FileConstants.FILE_NAME);
+           List<String> chatLines = chatService.readAll();
            chatText.setText(String.join("", chatLines));
            try {
                Thread.sleep(1000);
