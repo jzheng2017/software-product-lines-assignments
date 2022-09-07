@@ -1,6 +1,7 @@
 package spl.services;
 
 import java.io.IOException;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class FileReader {
     private static final Logger logger = Logger.getLogger(FileReader.class.getName());
@@ -18,7 +20,7 @@ public class FileReader {
         Path filePath = Path.of(path);
 
         try (Stream<String> stream = Files.lines(Paths.get(String.valueOf(filePath)), StandardCharsets.UTF_8)) {
-            return stream.toList();
+            return stream.collect(Collectors.toList());
         } catch (IOException e) {
             logger.log(Level.WARNING, "Could not retrieve the file contents", e);
         }
