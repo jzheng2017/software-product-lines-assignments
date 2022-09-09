@@ -53,9 +53,9 @@ public class Client {
     
     public void disconnect() {
     	try {
-    		IS_AUTHENTICATED = false;
             System.out.println("disconnected");
     		skt.close();
+    		IS_AUTHENTICATED = false;
     	}
     	catch (Exception e) {
     		System.out.println(e);
