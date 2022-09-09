@@ -45,8 +45,8 @@ public class ServerThread extends Thread {
                     continue;
                 }
 
-                writer.println("Je bericht is ontvangen");
-                System.out.println("Bericht ontvangen: " + message);
+                writer.println("Message received");
+                System.out.println("Received message: " + message);
                 chatService.sendMessage(message + "\n");
             } while (!skt.isClosed());
             

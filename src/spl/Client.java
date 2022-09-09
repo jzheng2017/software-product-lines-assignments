@@ -53,7 +53,8 @@ public class Client {
     
     public void disconnect() {
     	try {
-            System.out.println("disc");
+    		IS_AUTHENTICATED = false;
+            System.out.println("disconnected");
     		skt.close();
     	}
     	catch (Exception e) {
