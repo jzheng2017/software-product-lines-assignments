@@ -56,11 +56,13 @@ public class Client {
     }
 
     public void disconnect() {
-        try {
-            System.out.println("disc");
-            skt.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    	try {
+            System.out.println("disconnected");
+    		skt.close();
+    		IS_AUTHENTICATED = false;
+    	}
+    	catch (Exception e) {
+    		System.out.println(e);
+    	}
     }
 }
