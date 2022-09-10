@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FileLogService implements LogService {
-    private Logger logger = Logger.getLogger(FileLogService.class.getName());
+    private final Logger logger = Logger.getLogger(FileLogService.class.getName());
 
     @Override
     public void write(String message) {

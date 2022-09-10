@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChatService {
-    private LogService logService;
-    private EncryptionService encryptionService;
+    private final LogService logService;
+    private final EncryptionService encryptionService;
 
     public ChatService(LogService logService, EncryptionService encryptionService) {
         this.logService = logService;
