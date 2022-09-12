@@ -1,8 +1,10 @@
 package spl;
 
 import spl.services.ChatService;
+import spl.services.EncryptionServiceFactory;
+import spl.services.EncryptionType;
 import spl.services.FileLogService;
-import spl.services.SimpleEncryptionService;
+import spl.services.ReverseStringEncryptionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +22,7 @@ public class GUI {
     final static int BEGIN_CONNECT = 1;
     final static int CONNECTED = 2;
     private static final Logger logger = Logger.getLogger(GUI.class.getName());
-    private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
+    private static ChatService chatService;
     // Various GUI components and info
     public static JFrame mainFrame = null;
     public static JTextPane chatText = null;
@@ -171,6 +173,7 @@ public class GUI {
     }
 
     public static void main(String[] args) {
+        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.toEnum(args[0])));
         initGUI();
         updateChat();
     }

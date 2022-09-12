@@ -1,8 +1,10 @@
 package spl;
 
 import spl.services.ChatService;
+import spl.services.EncryptionServiceFactory;
+import spl.services.EncryptionType;
 import spl.services.FileLogService;
-import spl.services.SimpleEncryptionService;
+import spl.services.ReverseStringEncryptionService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,7 +12,7 @@ import java.net.Socket;
 
 
 public class Server {
-    private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
+    private static ChatService chatService;
 
     static public void startServer(int port) {
         chatService.clearChatLogs();
@@ -23,7 +25,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("New client connected");
 
-                new ServerThread(socket).start();
+                new ServerThread(socket, chatService).start();
             }
 
         } catch (IOException ex) {
@@ -33,6 +35,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.toEnum(args[0])));
         startServer(1234);
     }
 }

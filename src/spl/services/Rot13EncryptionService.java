@@ -1,16 +1,16 @@
 package spl.services;
 
-
-public class SimpleEncryptionService implements EncryptionService {
+public class Rot13EncryptionService implements EncryptionService {
     @Override
     public String encrypt(String text) {
-        return rot13(new StringBuilder(text).reverse().toString());
+        return rot13(text);
     }
 
     @Override
     public String decrypt(String text) {
-        return new StringBuilder(rot13(text)).reverse().toString();
+        return rot13(text);
     }
+
 
     private String rot13(String input) {
         StringBuilder sb = new StringBuilder();
