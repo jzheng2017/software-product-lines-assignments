@@ -14,3 +14,11 @@ Start a client or a number of clients
 - The encrypted chat is logged to src/chat_logs.txt
 
 tested with: openjdk 11.0.16 2022-07-19
+
+### Week 2 Task 5
+We selected a Strategy Pattern for the encryption so that a different encryption algorithm can be chosen, as a paid feature for example. By using the Strategy pattern it allows us to easily change from implementation without changing a lot of code.
+
+For the second pattern we chose the Factory Pattern which allows us to construct the implementation based on the parameter that was provided.
+For instance if the "rot13" value was provided then the factory can construct this rot13 encryption implementation and use that for encrypting/decrypting the messages.
+
+The features can be selected by the user using commandline parameters in the same way as for task 4.
