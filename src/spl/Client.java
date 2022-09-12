@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,9 +14,11 @@ import java.util.logging.Logger;
 public class Client {
     private static final Logger logger = Logger.getLogger(Client.class.getName());
     public static boolean IS_AUTHENTICATED = false;
+    public static boolean USE_COLOR = true;
     private final String hostname;
     private final int port;
     private Socket skt;
+    List<String> cmds = Arrays.asList("/auth", "/toggleColors");
 
     private final String username;
 
@@ -40,18 +44,41 @@ public class Client {
             System.out.println("I/O error: " + ex.getMessage());
         }
     }
+    
+    public void readInput(String color, String message) {
+    	String[] splitted = message.split("\\s+");
+    	String command = splitted[0];
+    	if(cmds.contains(command)) {
+    		if(command.equals("/auth")) {
+    	    	try {
+    	            OutputStream output = skt.getOutputStream();
+    	            PrintWriter writer = new PrintWriter(output, true);	
+    	            writer.println(message);
+    	        } catch (Exception e) {
+    	            System.out.println(e);
+    	        }
+    		}
+    		else  if(command.equals("/toggleColors")) {
+            	USE_COLOR = Boolean.parseBoolean(splitted[1]);
+            	GUI.toggleColorSelection(USE_COLOR);
+    		}
+    	}
+    	else if(IS_AUTHENTICATED) {
+            sendMessage(color, message);
+    	}
+    	else {
+    		logger.log(Level.WARNING, "You are not authenticated to send messages");
+    	}
+    }
 
-    public void sendMessage(String message) {
-        if (IS_AUTHENTICATED || message.contains("/auth")) {
-            try {
-                OutputStream output = skt.getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true);
-                writer.println(message);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        } else {
-            logger.log(Level.WARNING, "You are not authenticated to send messages");
+    private void sendMessage(String color, String message) {
+        try {
+        	String messageTBS = (USE_COLOR ? "[" + color + "]: " + message : message);
+            OutputStream output = skt.getOutputStream();
+            PrintWriter writer = new PrintWriter(output, true);
+            writer.println(messageTBS);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

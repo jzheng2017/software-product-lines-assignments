@@ -28,9 +28,8 @@ public class GUI {
     public static JLabel statusBar = null;
     public static JButton connectButton = null;
     public static JButton disconnectButton = null;
-    public static JButton redButton = null;
-    public static JButton greenButton = null;
-    public static JButton blueButton = null;
+    public static JComboBox<String> cb;
+    
     // Connection info
     public static String hostIP = "localhost";
     public static int port = 1234;
@@ -86,7 +85,7 @@ public class GUI {
 
 
         String[] choices = {"Red", "Green", "Blue"};
-        final JComboBox<String> cb = new JComboBox<String>(choices);
+        cb = new JComboBox<String>(choices);
         cb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 usernameColor = (String) cb.getSelectedItem();
@@ -129,7 +128,7 @@ public class GUI {
         chatLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.sendMessage("[" + usernameColor + "]: " + chatLine.getText());
+                user.readInput(usernameColor, chatLine.getText());
                 chatLine.setText("");
             }
         });
@@ -152,6 +151,10 @@ public class GUI {
         mainFrame.setLocation(200, 200);
         mainFrame.pack();
         mainFrame.setVisible(true);
+    }
+    
+    public static void toggleColorSelection(boolean enable) {
+    	cb.setVisible(enable);
     }
 
     private static void updateChat() {
