@@ -3,6 +3,7 @@ package spl;
 import spl.services.ChatService;
 import spl.services.FileLogService;
 import spl.services.SimpleEncryptionService;
+import spl.services.FeatureConfigurationService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class GUI {
     final static int DISCONNECTED = 0;
     final static int BEGIN_CONNECT = 1;
     final static int CONNECTED = 2;
+    private static final FeatureConfigurationService fcs = new FeatureConfigurationService();
     private static final Logger logger = Logger.getLogger(GUI.class.getName());
     private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
     // Various GUI components and info
@@ -35,7 +37,7 @@ public class GUI {
     public static int port = 1234;
     public static int connectionStatus = DISCONNECTED;
     public static boolean isHost = true;
-    public static Client user = new Client(hostIP, port, "Bob");
+    public static Client user = new Client(hostIP, port, "Bob", fcs);
     public static String usernameColor = "Red";
 
     private static JPanel initOptionsPane() {
@@ -153,17 +155,18 @@ public class GUI {
         mainFrame.setVisible(true);
     }
     
-    public static void toggleColorSelection(boolean enable) {
-    	cb.setVisible(enable);
+    public static void toggleColorSelection(boolean val) {
+    	cb.setVisible(val);
     }
 
     private static void updateChat() {
         while (true) {
+        	
             if (Client.IS_AUTHENTICATED) {
                 List<String> chatLines = chatService.readAll();
                 chatText.setText(String.join("\n", chatLines));
             } else {
-                logger.log(Level.WARNING, "You are not authenticated to read the chat logs!");
+                //logger.log(Level.WARNING, "You are not authenticated to read the chat logs!");
             }
             try {
                 Thread.sleep(500);
@@ -175,6 +178,8 @@ public class GUI {
 
     public static void main(String[] args) {
         initGUI();
+        Thread receiver_thread = new Thread(new GUIinputThread(fcs));
+        receiver_thread.start();
         updateChat();
     }
 }
