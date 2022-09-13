@@ -99,7 +99,7 @@ public class GUI {
                  */
             }
         });
-        cb.setVisible(true);
+        toggleColorSelection(fcs.isFeatureOn("usernameColors"));
 
         buttonPane.add(connectButton);
         buttonPane.add(disconnectButton);

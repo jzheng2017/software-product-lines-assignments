@@ -1,6 +1,7 @@
 package spl.services;
 
 public interface ConfigurationService {
-    void setFeature(String feature, boolean val);
+	void addFeature(String feature, boolean val);
+    void changeFeatureVal(String feature, boolean val);
     boolean isFeatureOn(String feature);
 }

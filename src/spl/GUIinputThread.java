@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GUIinputThread implements Runnable {
 
-    List<String> cmds = Arrays.asList("toggleColors");
+    List<String> cmds = Arrays.asList("usernameColors", "encryptMessages");
     FeatureConfigurationService fcs;
     
     public GUIinputThread(FeatureConfigurationService fcs) {
@@ -25,11 +25,9 @@ public class GUIinputThread implements Runnable {
     			if(input.length > 1) {
         			String command = input[0];
         			if(cmds.contains(command)) {
-        				if(command.equals("toggleColors")) {
-        					boolean arg = Boolean.parseBoolean(input[1]);
-        					fcs.setFeature("usernameColors", arg);
-        					GUI.toggleColorSelection(arg);
-        				}
+    					boolean arg = Boolean.parseBoolean(input[1]);
+    					fcs.changeFeatureVal(command, arg);
+    					GUI.toggleColorSelection(arg);
         			}
         			else {
         				System.out.println("Command not recognized");

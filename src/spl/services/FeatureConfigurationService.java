@@ -1,21 +1,27 @@
 package spl.services;
+import java.util.HashMap;
 
 public class FeatureConfigurationService implements ConfigurationService {
 
-	private static boolean USE_COLORS = true;
-
+	private static HashMap<String, Boolean> features = new HashMap<String, Boolean>();
+	
+	public FeatureConfigurationService() {
+		addFeature("usernameColors", true);
+		addFeature("encryptMessages", true);
+	}
+	
 	@Override
-	public void setFeature(String feature, boolean val) {
-		if(feature.equals("usernameColors")) {
-			USE_COLORS = val;
-		}
+	public void changeFeatureVal(String feature, boolean val) {
+		features.replace(feature, val);
 	}
 
 	@Override
 	public boolean isFeatureOn(String feature) {
-		if(feature.equals("usernameColors")) {
-			return USE_COLORS;
-		}
-		return false;
+		return features.get(feature);
+	}
+	
+	@Override
+	public void addFeature(String feature, boolean val) {
+		features.put(feature, val);
 	}
 }
