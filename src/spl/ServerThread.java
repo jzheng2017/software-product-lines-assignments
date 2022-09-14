@@ -2,9 +2,7 @@ package spl;
 
 import spl.services.AuthenticationService;
 import spl.services.ChatService;
-import spl.services.FileLogService;
 import spl.services.PasswordAuthenticationService;
-import spl.services.SimpleEncryptionService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,9 +18,9 @@ public class ServerThread extends Thread {
     private final ChatService chatService;
     private final AuthenticationService authenticationService;
 
-    public ServerThread(Socket socket) {
+    public ServerThread(Socket socket, ChatService chatService) {
         skt = socket;
-        chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
+        this.chatService = chatService;
         authenticationService = new PasswordAuthenticationService();
     }
 

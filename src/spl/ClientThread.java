@@ -25,7 +25,6 @@ public class ClientThread implements Runnable {
                     Client.IS_AUTHENTICATED = true;
                 }
                 System.out.println("Server message: " + message);
-
             } while (skt.isConnected());
 
         } catch (Exception e) {

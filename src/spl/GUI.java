@@ -2,7 +2,8 @@ package spl;
 
 import spl.services.ChatService;
 import spl.services.FileLogService;
-import spl.services.SimpleEncryptionService;
+import spl.services.ReverseStringEncryptionService;
+import spl.services.Rot13EncryptionService;
 import spl.services.FeatureConfigurationService;
 
 import javax.swing.*;
@@ -10,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +25,7 @@ public class GUI {
     final static int CONNECTED = 2;
     private static final FeatureConfigurationService fcs = new FeatureConfigurationService();
     private static final Logger logger = Logger.getLogger(GUI.class.getName());
-    private static final ChatService chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
+    private static ChatService chatService;
     // Various GUI components and info
     public static JFrame mainFrame = null;
     public static JTextPane chatText = null;
@@ -37,7 +40,7 @@ public class GUI {
     public static int port = 1234;
     public static int connectionStatus = DISCONNECTED;
     public static boolean isHost = true;
-    public static Client user = new Client(hostIP, port, "Bob", fcs);
+    public static Client user;
     public static String usernameColor = "Red";
 
     private static JPanel initOptionsPane() {
@@ -99,7 +102,7 @@ public class GUI {
                  */
             }
         });
-        toggleColorSelection(fcs.isFeatureOn("usernameColors"));
+        toggleColorSelection(fcs.isFeatureOn("usernamecolors"));
 
         buttonPane.add(connectButton);
         buttonPane.add(disconnectButton);
@@ -177,9 +180,14 @@ public class GUI {
     }
 
     public static void main(String[] args) {
+        List<String> allFeatures = Arrays.asList("reverse", "rot13", "usernamecolors");
+        List<String> arguments = new ArrayList<>(Arrays.asList(args));
+        for(String feat : allFeatures){
+            fcs.addFeature(feat.toLowerCase(), arguments.contains(feat));
+        }
+        chatService = new ChatService(new FileLogService(), (fcs.isFeatureOn("rot13") ? new Rot13EncryptionService() : new ReverseStringEncryptionService()));
+        user = new Client(hostIP, port, fcs);
         initGUI();
-        Thread receiver_thread = new Thread(new GUIinputThread(fcs));
-        receiver_thread.start();
         updateChat();
     }
 }

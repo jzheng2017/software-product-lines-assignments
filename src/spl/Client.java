@@ -20,7 +20,7 @@ public class Client {
     private Socket skt;
     List<String> cmds = Arrays.asList("/auth");
 
-    public Client(String hname, int prt, String user, FeatureConfigurationService fcs) {
+    public Client(String hname, int prt, FeatureConfigurationService fcs) {
     	this.fcs = fcs;
         hostname = hname;
         port = prt;
@@ -66,7 +66,7 @@ public class Client {
 
     private void sendMessage(String color, String message) {
         try {
-        	String messageTBS = (fcs.isFeatureOn("usernameColors") ? ("[" + color + "]: " + message) : message);
+        	String messageTBS = (fcs.isFeatureOn("usernamecolors") ? ("[" + color + "]: " + message) : message);
             OutputStream output = skt.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
             writer.println(messageTBS);
