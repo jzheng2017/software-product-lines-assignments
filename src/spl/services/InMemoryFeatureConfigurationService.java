@@ -10,7 +10,7 @@ public class InMemoryFeatureConfigurationService implements FeatureConfiguration
 
     @Override
 	public boolean isFeatureOn(String feature) {
-		return features.get(feature);
+        return features.getOrDefault(feature, false);
 	}
 	
 	@Override
