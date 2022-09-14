@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import spl.services.FeatureConfigurationService;
-import spl.services.InMemoryFeatureConfigurationService;
 
 public class Client {
     private static final Logger logger = Logger.getLogger(Client.class.getName());
@@ -22,7 +21,7 @@ public class Client {
     private Socket skt;
     private List<String> cmds = Arrays.asList("/auth");
 
-    public Client(String hname, int prt, InMemoryFeatureConfigurationService fcs) {
+    public Client(String hname, int prt, FeatureConfigurationService fcs) {
     	this.fcs = fcs;
         hostname = hname;
         port = prt;
