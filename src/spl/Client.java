@@ -9,7 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import spl.services.FeatureConfigurationService;
+import spl.services.InMemoryFeatureConfigurationService;
 
 public class Client {
     private static final Logger logger = Logger.getLogger(Client.class.getName());
@@ -18,9 +20,9 @@ public class Client {
     private final String hostname;
     private final int port;
     private Socket skt;
-    List<String> cmds = Arrays.asList("/auth");
+    private List<String> cmds = Arrays.asList("/auth");
 
-    public Client(String hname, int prt, FeatureConfigurationService fcs) {
+    public Client(String hname, int prt, InMemoryFeatureConfigurationService fcs) {
     	this.fcs = fcs;
         hostname = hname;
         port = prt;

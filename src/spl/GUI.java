@@ -4,7 +4,7 @@ import spl.services.ChatService;
 import spl.services.FileLogService;
 import spl.services.ReverseStringEncryptionService;
 import spl.services.Rot13EncryptionService;
-import spl.services.FeatureConfigurationService;
+import spl.services.InMemoryFeatureConfigurationService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class GUI {
     final static int DISCONNECTED = 0;
     final static int BEGIN_CONNECT = 1;
     final static int CONNECTED = 2;
-    private static final FeatureConfigurationService fcs = new FeatureConfigurationService();
+    private static final InMemoryFeatureConfigurationService fcs = new InMemoryFeatureConfigurationService();
     private static final Logger logger = Logger.getLogger(GUI.class.getName());
     private static ChatService chatService;
     // Various GUI components and info
