@@ -22,3 +22,8 @@ For the second pattern we chose the Factory Pattern which allows us to construct
 For instance if the "rot13" value was provided then the factory can construct this rot13 encryption implementation and use that for encrypting/decrypting the messages.
 
 The features can be selected by the user using commandline parameters in the same way as for task 4.
+
+**NOTE**
+
+To enable encryption you have to provide "rot13" or "reverse" (the encryption methods) as the first argument in the list of arguments. To enable chat color you provide "usernamecolors" as the second argument.
+To disable either feature you can 
