@@ -1,6 +1,7 @@
 package spl;
 
 import spl.services.ChatService;
+import spl.services.EncryptionService;
 import spl.services.EncryptionServiceFactory;
 import spl.services.EncryptionType;
 import spl.services.FileLogService;
@@ -11,6 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,8 +43,8 @@ public class GUI {
     public static int connectionStatus = DISCONNECTED;
     public static boolean isHost = true;
     public static Client user = new Client(hostIP, port, "Bob");
-    public static String usernameColor = "Red";
-
+    private static boolean chatColorEnabled = false;
+    private static String chatColor = "Red";
     private static JPanel initOptionsPane() {
         ActionAdapter buttonListener = null;
 
@@ -91,13 +95,7 @@ public class GUI {
         final JComboBox<String> cb = new JComboBox<String>(choices);
         cb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                usernameColor = (String) cb.getSelectedItem();
-                /*
-                 * String colorString = (String) cb.getSelectedItem();
-                 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
-                 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
-                 * { usernameColor = Color.blue; }
-                 */
+                chatColor = (String) cb.getSelectedItem();
             }
         });
         cb.setVisible(true);
@@ -131,7 +129,7 @@ public class GUI {
         chatLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.sendMessage("[" + usernameColor + "]: " + chatLine.getText());
+                user.sendMessage((chatColorEnabled ? "[" + chatColor + "]: " : "") + chatLine.getText());
                 chatLine.setText("");
             }
         });
@@ -173,7 +171,23 @@ public class GUI {
     }
 
     public static void main(String[] args) {
-        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.toEnum(args[0])));
+        List<String> argList = Arrays.asList(args);
+        chatColorEnabled = argList.contains("usernamecolors");
+        if (argList.size() > 0 && (args[0].equals("rot13") || args[0].equals("reverse"))) {
+            chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.toEnum(args[0])));
+        } else {
+            chatService = new ChatService(new FileLogService(), new EncryptionService() {
+                @Override
+                public String encrypt(String text) {
+                    return text;
+                }
+
+                @Override
+                public String decrypt(String text) {
+                    return text;
+                }
+            });
+        }
         initGUI();
         updateChat();
     }

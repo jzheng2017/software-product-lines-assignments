@@ -21,7 +21,7 @@ public class ChatService {
                 .readAll(FileConstants.FILE_NAME)
                 .stream()
                 .filter(line -> !line.isEmpty())
-                .map(line -> encryptionService.decrypt(line))
+                .map(encryptionService::decrypt)
                 .collect(Collectors.toList());
     }
 

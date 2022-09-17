@@ -1,6 +1,7 @@
 package spl;
 
 import spl.services.ChatService;
+import spl.services.EncryptionService;
 import spl.services.EncryptionServiceFactory;
 import spl.services.EncryptionType;
 import spl.services.FileLogService;
@@ -35,7 +36,21 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.toEnum(args[0])));
+        if (args.length > 0 && (args[0].equals("rot13") || args[0].equals("reverse"))) {
+            chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.toEnum(args[0])));
+        } else {
+            chatService = new ChatService(new FileLogService(), new EncryptionService() {
+                @Override
+                public String encrypt(String text) {
+                    return text;
+                }
+
+                @Override
+                public String decrypt(String text) {
+                    return text;
+                }
+            });
+        }
         startServer(1234);
     }
 }
