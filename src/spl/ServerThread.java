@@ -3,6 +3,7 @@ package spl;
 import spl.services.AuthenticationService;
 import spl.services.ChatService;
 import spl.services.FileLogService;
+import spl.services.LogService;
 import spl.services.PasswordAuthenticationService;
 import spl.services.SimpleEncryptionService;
 
@@ -19,7 +20,7 @@ public class ServerThread extends Thread {
     private final Socket skt;
     private final ChatService chatService;
     private final AuthenticationService authenticationService;
-
+    private final LogService logger = new FileLogService();
     public ServerThread(Socket socket) {
         skt = socket;
         chatService = new ChatService(new FileLogService(), new SimpleEncryptionService());
@@ -51,16 +52,12 @@ public class ServerThread extends Thread {
                 }
 
                 writer.println("Message received");
-                //#if Logging
-//@                System.out.println("Received message: " + message);
-                //#endif
+                logger.write("Received message: " + message);
                 chatService.sendMessage(message + "\n");
             } while (!skt.isClosed());
 
         } catch (IOException ex) {
-        	//#if Logging
-//@            System.out.println("Server exception: " + ex.getMessage());
-            //#endif
+            logger.write("Server exception: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

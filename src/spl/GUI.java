@@ -85,21 +85,21 @@ public class GUI {
         disconnectButton.setEnabled(false);
 
         //#if UsernameColors
-        String[] choices = {"Red", "Green", "Blue"};
-        final JComboBox<String> cb = new JComboBox<String>(choices);
-        cb.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                usernameColor = (String) cb.getSelectedItem();
-                /*
-                 * String colorString = (String) cb.getSelectedItem();
-                 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
-                 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
-                 * { usernameColor = Color.blue; }
-                 */
-            }
-        });
-        cb.setVisible(true);
-        optionsPane.add(cb);
+//@        String[] choices = {"Red", "Green", "Blue"};
+//@        final JComboBox<String> cb = new JComboBox<String>(choices);
+//@        cb.addActionListener(new ActionListener() {
+//@            public void actionPerformed(ActionEvent e) {
+//@                usernameColor = (String) cb.getSelectedItem();
+//@                /*
+//@                 * String colorString = (String) cb.getSelectedItem();
+//@                 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
+//@                 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
+//@                 * { usernameColor = Color.blue; }
+//@                 */
+//@            }
+//@        });
+//@        cb.setVisible(true);
+//@        optionsPane.add(cb);
         //#endif
         
         buttonPane.add(connectButton);
@@ -132,7 +132,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 user.sendMessage(
                 				//#if UsernameColors
-                				"[" + usernameColor + "]: " + 
+//@                				"[" + usernameColor + "]: " + 
                 				//#endif
                 				chatLine.getText());
                 chatLine.setText("");

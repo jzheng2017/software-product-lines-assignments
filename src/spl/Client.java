@@ -1,5 +1,8 @@
 package spl;
 
+import spl.services.ConsoleLogService;
+import spl.services.LogService;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -17,7 +20,7 @@ public class Client {
     private Socket skt;
 
     private final String username;
-
+    private final LogService logService = new ConsoleLogService();
     public Client(String hname, int prt, String user) {
         hostname = hname;
         port = prt;
@@ -32,13 +35,9 @@ public class Client {
             receiver_thread.start();
 
         } catch (UnknownHostException ex) {
-        	//#if Logging
-            System.out.println("Server not found: " + ex.getMessage());
-            //#endif
+            logService.write("Server not found: " + ex.getMessage());
         } catch (IOException ex) {
-        	//#if Logging
-            System.out.println("I/O error: " + ex.getMessage());
-            //#endif
+            logService.write("I/O error: " + ex.getMessage());
         }
     }
 
@@ -49,9 +48,7 @@ public class Client {
                 PrintWriter writer = new PrintWriter(output, true);
                 writer.println(message);
             } catch (Exception e) {
-            	//#if Logging
-                System.out.println(e);
-                //#endif
+                logService.write(e.getMessage());
             }
         } else {
             logger.log(Level.WARNING, "You are not authenticated to send messages");
@@ -60,16 +57,12 @@ public class Client {
 
     public void disconnect() {
     	try {
-    		//#if Logging
-            System.out.println("disconnected");
-            //#endif
+            logService.write("disconnected");
     		skt.close();
     		IS_AUTHENTICATED = false;
     	}
     	catch (Exception e) {
-    		//#if Logging
-    		System.out.println(e);
-    		//#endif
+    		logService.write(e.getMessage());
     	}
     }
 }

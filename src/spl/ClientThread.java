@@ -1,5 +1,8 @@
 package spl;
 
+import spl.services.ConsoleLogService;
+import spl.services.LogService;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,7 +10,7 @@ import java.net.Socket;
 
 public class ClientThread implements Runnable {
     private final Socket skt;
-
+    private final LogService logger = new ConsoleLogService();
     public ClientThread(Socket socket) {
         skt = socket;
     }
@@ -24,15 +27,12 @@ public class ClientThread implements Runnable {
                 if (message.equals("true")) {
                     Client.IS_AUTHENTICATED = true;
                 }
-                //#if Logging
-//@                System.out.println("Server message: " + message);
-                //#endif
+
+                logger.write("Server message: " + message);
             } while (skt.isConnected());
 
         } catch (Exception e) {
-        	//#if Logging
-//@            System.out.println(e);
-            //#endif
+            logger.write(e.getMessage());
         }
     }
 }
