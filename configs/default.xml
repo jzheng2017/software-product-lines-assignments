@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
-	<feature automatic="selected" name="productlinesassignments"/>
+	<feature automatic="selected" name="chatapp"/>
 	<feature name="Logging"/>
 	<feature automatic="selected" name="Encryption"/>
 	<feature manual="selected" name="Rot13"/>

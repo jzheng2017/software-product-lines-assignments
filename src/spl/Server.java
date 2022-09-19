@@ -17,24 +17,30 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
 
-            System.out.println("Server is listening on port " + port);
-
+        	//#if Logging
+//@            System.out.println("Server is listening on port " + port);
+            //#endif
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("New client connected");
-
+                //#if Logging
+//@                System.out.println("New client connected");
+                //#endif
                 new ServerThread(socket).start();
             }
 
         } catch (IOException ex) {
-            System.out.println("Server exception: " + ex.getMessage());
+        	//#if Logging
+//@            System.out.println("Server exception: " + ex.getMessage());
+            //#endif
             ex.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
     	//#if Logging
-//@    	System.out.println("logging Enabled");
+//@    	System.out.println("Logging Enabled");
+    	//#else
+    	System.out.println("Logging Disabled");
     	//#endif
         startServer(1234);
     }

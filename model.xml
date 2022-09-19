@@ -10,7 +10,7 @@
 		<graphics key="layoutalgorithm" value="1"/>
 	</properties>
 	<struct>
-		<and abstract="true" mandatory="true" name="productlinesassignments">
+		<and abstract="true" mandatory="true" name="chatapp">
 			<feature name="Logging"/>
 			<alt abstract="true" name="Encryption">
 				<feature name="Rot13"/>

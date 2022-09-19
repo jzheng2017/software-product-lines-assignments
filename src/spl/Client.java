@@ -32,12 +32,13 @@ public class Client {
             receiver_thread.start();
 
         } catch (UnknownHostException ex) {
-
-            System.out.println("Server not found: " + ex.getMessage());
-
+        	//#if Logging
+//@            System.out.println("Server not found: " + ex.getMessage());
+            //#endif
         } catch (IOException ex) {
-
-            System.out.println("I/O error: " + ex.getMessage());
+        	//#if Logging
+//@            System.out.println("I/O error: " + ex.getMessage());
+            //#endif
         }
     }
 
@@ -48,7 +49,9 @@ public class Client {
                 PrintWriter writer = new PrintWriter(output, true);
                 writer.println(message);
             } catch (Exception e) {
-                System.out.println(e);
+            	//#if Logging
+//@                System.out.println(e);
+                //#endif
             }
         } else {
             logger.log(Level.WARNING, "You are not authenticated to send messages");
@@ -57,12 +60,16 @@ public class Client {
 
     public void disconnect() {
     	try {
-            System.out.println("disconnected");
+    		//#if Logging
+//@            System.out.println("disconnected");
+            //#endif
     		skt.close();
     		IS_AUTHENTICATED = false;
     	}
     	catch (Exception e) {
-    		System.out.println(e);
+    		//#if Logging
+//@    		System.out.println(e);
+    		//#endif
     	}
     }
 }

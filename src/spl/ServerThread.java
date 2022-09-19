@@ -51,12 +51,16 @@ public class ServerThread extends Thread {
                 }
 
                 writer.println("Message received");
-                System.out.println("Received message: " + message);
+                //#if Logging
+//@                System.out.println("Received message: " + message);
+                //#endif
                 chatService.sendMessage(message + "\n");
             } while (!skt.isClosed());
 
         } catch (IOException ex) {
-            System.out.println("Server exception: " + ex.getMessage());
+        	//#if Logging
+//@            System.out.println("Server exception: " + ex.getMessage());
+            //#endif
             ex.printStackTrace();
         }
     }
