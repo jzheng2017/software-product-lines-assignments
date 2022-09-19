@@ -33,11 +33,11 @@ public class Client {
 
         } catch (UnknownHostException ex) {
         	//#if Logging
-//@            System.out.println("Server not found: " + ex.getMessage());
+            System.out.println("Server not found: " + ex.getMessage());
             //#endif
         } catch (IOException ex) {
         	//#if Logging
-//@            System.out.println("I/O error: " + ex.getMessage());
+            System.out.println("I/O error: " + ex.getMessage());
             //#endif
         }
     }
@@ -50,7 +50,7 @@ public class Client {
                 writer.println(message);
             } catch (Exception e) {
             	//#if Logging
-//@                System.out.println(e);
+                System.out.println(e);
                 //#endif
             }
         } else {
@@ -61,14 +61,14 @@ public class Client {
     public void disconnect() {
     	try {
     		//#if Logging
-//@            System.out.println("disconnected");
+            System.out.println("disconnected");
             //#endif
     		skt.close();
     		IS_AUTHENTICATED = false;
     	}
     	catch (Exception e) {
     		//#if Logging
-//@    		System.out.println(e);
+    		System.out.println(e);
     		//#endif
     	}
     }

@@ -84,7 +84,7 @@ public class GUI {
         disconnectButton.addActionListener(buttonListener);
         disconnectButton.setEnabled(false);
 
-
+        //#if UsernameColors
         String[] choices = {"Red", "Green", "Blue"};
         final JComboBox<String> cb = new JComboBox<String>(choices);
         cb.addActionListener(new ActionListener() {
@@ -99,10 +99,11 @@ public class GUI {
             }
         });
         cb.setVisible(true);
-
+        optionsPane.add(cb);
+        //#endif
+        
         buttonPane.add(connectButton);
         buttonPane.add(disconnectButton);
-        optionsPane.add(cb);
         optionsPane.add(buttonPane);
 
         return optionsPane;
@@ -129,7 +130,11 @@ public class GUI {
         chatLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.sendMessage("[" + usernameColor + "]: " + chatLine.getText());
+                user.sendMessage(
+                				//#if UsernameColors
+                				"[" + usernameColor + "]: " + 
+                				//#endif
+                				chatLine.getText());
                 chatLine.setText("");
             }
         });
