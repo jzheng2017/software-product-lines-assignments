@@ -33,6 +33,9 @@ public class Server {
     }
 
     public static void main(String[] args) {
+    	//#if Logging
+//@    	System.out.println("logging Enabled");
+    	//#endif
         startServer(1234);
     }
 }
