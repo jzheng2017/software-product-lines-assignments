@@ -40,6 +40,12 @@ public class GUI {
     public static Client user = new Client(hostIP, port, "Bob");
     public static String usernameColor = "Red";
 
+    public GUI(ChatService cs){
+        chatService = cs;
+        initGUI();
+        updateChat();
+    }
+
     private static JPanel initOptionsPane() {
         ActionAdapter buttonListener = null;
 
@@ -110,7 +116,7 @@ public class GUI {
         return optionsPane;
     }
 
-    private static void initGUI() {
+    public static void initGUI() {
         // Set up the status bar
         statusBar = new JLabel();
         statusBar.setText("Offline");
@@ -160,7 +166,7 @@ public class GUI {
         mainFrame.setVisible(true);
     }
 
-    private static void updateChat() {
+    public static void updateChat() {
         while (true) {
             if (Client.IS_AUTHENTICATED) {
                 List<String> chatLines = chatService.readAll();
@@ -175,29 +181,7 @@ public class GUI {
             }
         }
     }
-    private static void determineEncryptionMethod() {
-        boolean encryptionDecided = false;
 
-        //#if Rot13
-//@        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.ROT13));
-//@        encryptionDecided = true;
-        //#endif
-
-        //#if Reverse
-//@        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.REVERSE));
-//@        encryptionDecided = true;
-        //#endif
-
-        if (!encryptionDecided) {
-            chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.PLAIN));
-        }
-    }
-
-    public static void main(String[] args) {
-        determineEncryptionMethod();
-        initGUI();
-        updateChat();
-    }
 }
 
 // Action adapter for easy event-listener coding

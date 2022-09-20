@@ -48,8 +48,8 @@ public class Server {
         boolean encryptionDecided = false;
 
         //#if Rot13
-//@        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.ROT13));
-//@        encryptionDecided = true;
+        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.ROT13));
+        encryptionDecided = true;
         //#endif
 
         //#if Reverse
