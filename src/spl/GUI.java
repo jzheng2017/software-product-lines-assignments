@@ -1,9 +1,6 @@
 package spl;
 
 import spl.services.ChatService;
-import spl.services.EncryptionServiceFactory;
-import spl.services.EncryptionType;
-import spl.services.FileLogService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,42 +8,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
-public class GUI {
-    // Connect status constants
-    final static int DISCONNECTED = 0;
-    final static int BEGIN_CONNECT = 1;
-    final static int CONNECTED = 2;
-    private static final Logger logger = Logger.getLogger(GUI.class.getName());
-    private static ChatService chatService;
+public class GUI extends Interface {
     // Various GUI components and info
-    public static JFrame mainFrame = null;
-    public static JTextPane chatText = null;
-    public static JTextField chatLine = null;
-    public static JLabel statusBar = null;
-    public static JButton connectButton = null;
-    public static JButton disconnectButton = null;
-    public static JButton redButton = null;
-    public static JButton greenButton = null;
-    public static JButton blueButton = null;
-    // Connection info
-    public static String hostIP = "localhost";
-    public static int port = 1234;
-    public static int connectionStatus = DISCONNECTED;
-    public static boolean isHost = true;
-    public static Client user = new Client(hostIP, port, "Bob");
-    public static String usernameColor = "Red";
+    private JFrame mainFrame = null;
+    private JTextPane chatText = null;
+    private JTextField chatLine = null;
+    private JLabel statusBar = null;
+    private JButton connectButton = null;
+    private JButton disconnectButton = null;
+    private JButton redButton = null;
+    private JButton greenButton = null;
+    private JButton blueButton = null;
 
-    public GUI(ChatService cs){
-        chatService = cs;
+
+    public GUI(ChatService cs) {
+        super(cs);
+    }
+
+    @Override
+    public void init() {
         initGUI();
+    }
+
+    @Override
+    public void update() {
         updateChat();
     }
 
-    private static JPanel initOptionsPane() {
+    private JPanel initOptionsPane() {
         ActionAdapter buttonListener = null;
 
         // Create an options pane
@@ -108,7 +99,7 @@ public class GUI {
 //@        cb.setVisible(true);
 //@        optionsPane.add(cb);
         //#endif
-        
+
         buttonPane.add(connectButton);
         buttonPane.add(disconnectButton);
         optionsPane.add(buttonPane);
@@ -116,7 +107,7 @@ public class GUI {
         return optionsPane;
     }
 
-    public static void initGUI() {
+    private void initGUI() {
         // Set up the status bar
         statusBar = new JLabel();
         statusBar.setText("Offline");
@@ -138,10 +129,10 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 user.sendMessage(
-                				//#if UsernameColors
-//@                				"[" + usernameColor + "]: " + 
-                				//#endif
-                				chatLine.getText());
+                        //#if UsernameColors
+//@                				"[" + usernameColor + "]: " +
+                        //#endif
+                        chatLine.getText());
                 chatLine.setText("");
             }
         });
@@ -166,26 +157,25 @@ public class GUI {
         mainFrame.setVisible(true);
     }
 
-    public static void updateChat() {
+    private void updateChat() {
         while (true) {
             if (Client.IS_AUTHENTICATED) {
                 List<String> chatLines = chatService.readAll();
                 chatText.setText(String.join("\n", chatLines));
             } else {
-                logger.log(Level.WARNING, "You are not authenticated to read the chat logs!");
+                logger.write("You are not authenticated to read the chat logs!");
             }
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                logger.log(Level.WARNING, "Could not update chat", e);
+                logger.write("Could not update chat. Cause: " + e.getMessage());
             }
         }
     }
 
-}
-
-// Action adapter for easy event-listener coding
-class ActionAdapter implements ActionListener {
-    public void actionPerformed(ActionEvent e) {
+    // Action adapter for easy event-listener coding
+    private static class ActionAdapter implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        }
     }
 }

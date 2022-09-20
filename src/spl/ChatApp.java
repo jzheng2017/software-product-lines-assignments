@@ -32,10 +32,10 @@ public class ChatApp {
     public static void main(String[] args) throws IOException {
         determineEncryptionMethod();
         //#if GUI
-//@        new GUI(chatService);
+        new GUI(chatService);
         //#endif
         //#if Console
-        new CLI(chatService);
+//@        new CLI(chatService);
         //#endif
     }
 
