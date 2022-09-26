@@ -3,6 +3,7 @@ package spl;
 import spl.Client;
 import spl.GUI;
 import spl.services.ChatService;
+import spl.services.ColorService;
 import spl.services.ConsoleLogService;
 import spl.services.LogService;
 
@@ -15,6 +16,7 @@ public abstract class Interface {
     protected final int BEGIN_CONNECT = 1;
     protected final int CONNECTED = 2;
     protected final ChatService chatService;
+    protected final ColorService colorService;
     // Connection info
     protected String hostIP = "localhost";
     protected int port = 1234;
@@ -23,8 +25,9 @@ public abstract class Interface {
     protected Client user = new Client(hostIP, port, "Bob");
     protected String usernameColor = "Red";
 
-    public Interface(ChatService chatService) {
+    public Interface(ChatService chatService, ColorService colorService) {
         this.chatService = chatService;
+        this.colorService = colorService;
         init();
         update();
     }

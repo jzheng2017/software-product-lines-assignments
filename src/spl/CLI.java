@@ -1,6 +1,7 @@
 package spl;
 
 import spl.services.ChatService;
+import spl.services.ColorService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -8,8 +9,8 @@ import java.util.Scanner;
 
 public class CLI extends Interface {
 
-    public CLI(ChatService cs) {
-        super(cs);
+    public CLI(ChatService cs, ColorService colorService) {
+        super(cs, colorService);
         initCLI();
     }
 

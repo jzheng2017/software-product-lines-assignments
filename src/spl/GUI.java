@@ -1,6 +1,7 @@
 package spl;
 
 import spl.services.ChatService;
+import spl.services.ColorService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +24,8 @@ public class GUI extends Interface {
     private JButton blueButton = null;
 
 
-    public GUI(ChatService cs) {
-        super(cs);
+    public GUI(ChatService cs, ColorService colorService) {
+        super(cs, colorService);
     }
 
     @Override
@@ -128,9 +129,7 @@ public class GUI extends Interface {
         chatLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.sendMessage(
-                				"[" + usernameColor + "]: " +
-                        chatLine.getText());
+                user.sendMessage(colorService.sendMessage(usernameColor, chatLine.getText()));
                 chatLine.setText("");
             }
         });
