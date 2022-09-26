@@ -17,15 +17,19 @@ public class ChatApp {
     private static ColorService colorService;
 
 
-    private static void determineEncryptionMethod() {
+    private static void determineEncryptionMethod(String encryptionType) {
         boolean encryptionDecided = false;
-
-        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.ROT13));
-        encryptionDecided = true;
-
-        chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.REVERSE));
-        encryptionDecided = true;
-
+        
+        if(encryptionType.equals("rot13"))
+        {
+        	chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.ROT13));
+        	encryptionDecided = true;
+        }
+        else if(encryptionType.equals("reverse"))
+        {
+        	chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.REVERSE));
+        	encryptionDecided = true;
+        }
         if (!encryptionDecided) {
             chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.PLAIN));
         }
@@ -36,10 +40,10 @@ public class ChatApp {
     }
 
     public static void main(String[] args) throws IOException {
-        determineEncryptionMethod();
+        determineEncryptionMethod("rot13");
         useUsernameColor(true);
         new GUI(chatService, colorService);
-        new CLI(chatService, colorService);
+        // new CLI(chatService, colorService);
     }
 
 
