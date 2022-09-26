@@ -1,0 +1,4 @@
+a)
+To implement this took quite some effort, first we needed to find where the part of the code was used and how, so that we could define an interface, then we needed to place all the code in classes that implement that interface and then instantiate and test the classes with different instantiations.
+b)
+We didn't have to change anything in the source code since we already had interfaces for the different features from the start. This allows us to "plug-in" with different implementations of the feature (e.g. reverse encryption or rot13 encryption) with minimal code changes. We are then able to reuse this implementation in different parts of the code by simply using that interface.
