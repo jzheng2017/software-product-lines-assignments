@@ -3,6 +3,7 @@ package spl;
 import spl.services.ChatService;
 import spl.services.MessageTransformer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,12 +42,16 @@ public class CLI extends Interface {
     }
 
     private void updateChat() {
+        List<String> prevChatLines = new ArrayList<>();
         while (true) {
             if (Client.IS_AUTHENTICATED) {
-                System.out.print("\n---- CHAT START ----\n");
                 List<String> chatLines = chatService.readAll();
-                System.out.print(String.join("\n", chatLines));
-                System.out.print("\n---- CHAT END ----\n");
+                if (!prevChatLines.equals(chatLines)) {
+                    System.out.print("\n---- CHAT START ----\n");
+                    System.out.print(String.join("\n", chatLines));
+                    System.out.print("\n---- CHAT END ----\n");
+                    prevChatLines = chatLines;
+                }
             } else {
                 logger.write("You are not authenticated to read the chat logs!");
             }
@@ -57,5 +62,4 @@ public class CLI extends Interface {
             }
         }
     }
-
 }
