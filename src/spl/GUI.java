@@ -2,6 +2,7 @@ package spl;
 
 import spl.services.ChatService;
 import spl.services.ColorService;
+import spl.services.MessageTransformer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,8 +25,8 @@ public class GUI extends Interface {
     private JButton blueButton = null;
 
 
-    public GUI(ChatService cs, ColorService colorService) {
-        super(cs, colorService);
+    public GUI(ChatService cs, MessageTransformer messageTransformer) {
+        super(cs, messageTransformer);
     }
 
     @Override
@@ -89,6 +90,7 @@ public class GUI extends Interface {
         cb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 usernameColor = (String) cb.getSelectedItem();
+                ColorService.getInstance().setColor(usernameColor);
                 /*
                  * String colorString = (String) cb.getSelectedItem();
                  * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
@@ -129,7 +131,7 @@ public class GUI extends Interface {
         chatLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.sendMessage(colorService.sendMessage(usernameColor, chatLine.getText()));
+                user.sendMessage(messageTransformer.transform(chatLine.getText()));
                 chatLine.setText("");
             }
         });

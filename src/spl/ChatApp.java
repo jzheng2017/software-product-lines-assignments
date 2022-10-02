@@ -2,11 +2,12 @@ package spl;
 
 import spl.services.ChatService;
 import spl.services.ColorService;
+import spl.services.MessageTransformer;
 import spl.services.EncryptionServiceFactory;
 import spl.services.EncryptionType;
 import spl.services.FileLogService;
-import spl.services.WithUsernameColorService;
-import spl.services.WithoutUsernameColorService;
+import spl.services.IdentityMessageTransformer;
+import spl.services.ColorMessageTransformer;
 
 import java.io.IOException;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 public class ChatApp {
 
     private static ChatService chatService;
-    private static ColorService colorService;
+    private static MessageTransformer messageTransformer;
 
 
     private static void determineEncryptionMethod(String encryptionType) {
@@ -36,14 +37,14 @@ public class ChatApp {
     }
 
     private static void useUsernameColor(boolean use) {
-        colorService = use ? new WithUsernameColorService() : new WithoutUsernameColorService();
+        messageTransformer = use ? new ColorMessageTransformer() : new IdentityMessageTransformer();
     }
 
     public static void main(String[] args) throws IOException {
         determineEncryptionMethod("rot13");
         useUsernameColor(true);
-        new GUI(chatService, colorService);
-        // new CLI(chatService, colorService);
+        new GUI(chatService, messageTransformer);
+//        new CLI(chatService, messageTransformer);
     }
 
 
