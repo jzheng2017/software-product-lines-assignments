@@ -1,45 +1,64 @@
-package spl; 
+package spl;  
 
-import spl.services.ChatService; 
-import spl.services.ColorService; 
-import spl.services.MessageTransformer; 
+import spl.services.ChatService;  
+import spl.services.ColorService;  
+import spl.services.MessageTransformer;  
 
-import javax.swing.*; 
-import java.awt.*; 
-import java.awt.event.ActionEvent; 
-import java.awt.event.ActionListener; 
-import java.awt.event.KeyEvent; 
-import java.util.List; 
+import javax.swing.*;  
+import java.awt.*;  
+import java.awt.event.ActionEvent;  
+import java.awt.event.ActionListener;  
+import java.awt.event.KeyEvent;  
+import java.util.List;  
 
 
-public  class  GUI  extends Interface {
+public   class   GUI   extends Interface {
+	
 	
     // Various GUI components and info
     private JFrame mainFrame = null;
 
 	
+
+	
     private JTextPane chatText = null;
+
+	
 
 	
     private JTextField chatLine = null;
 
 	
+
+	
     private JLabel statusBar = null;
+
+	
 
 	
     private JButton connectButton = null;
 
 	
+
+	
     private JButton disconnectButton = null;
+
+	
 
 	
     private JButton redButton = null;
 
 	
+
+	
     private JButton greenButton = null;
 
 	
+
+	
     private JButton blueButton = null;
+
+	
 
 	
 
@@ -50,6 +69,8 @@ public  class  GUI  extends Interface {
 
 	
 
+	
+
     @Override
     public void init() {
         initGUI();
@@ -57,10 +78,14 @@ public  class  GUI  extends Interface {
 
 	
 
+	
+
     @Override
     public void update() {
         updateChat();
     }
+
+	
 
 	
 
@@ -137,6 +162,8 @@ public  class  GUI  extends Interface {
 
 	
 
+	
+
     private void initGUI() {
         // Set up the status bar
         statusBar = new JLabel();
@@ -185,6 +212,8 @@ public  class  GUI  extends Interface {
 
 	
 
+	
+
     private void updateChat() {
         while (true) {
             if (Client.IS_AUTHENTICATED) {
@@ -203,8 +232,11 @@ public  class  GUI  extends Interface {
 
 	
 
+	
+
     // Action adapter for easy event-listener coding
-    private static  class  ActionAdapter  implements ActionListener {
+    private static   class   ActionAdapter   implements ActionListener {
+		
 		
         public void actionPerformed(ActionEvent e) {
         }

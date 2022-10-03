@@ -1,8 +1,11 @@
-package spl.services; 
+package spl.services;  
 
-public  interface  EncryptionService {
+public   interface   EncryptionService {
+	
 	
     String encrypt(String text);
+
+	
 
 	
 

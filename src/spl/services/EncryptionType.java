@@ -1,9 +1,9 @@
-package spl.services; 
+package spl.services;  
 
-public enum  EncryptionType {
-    ROT13 , 
-    REVERSE , 
-    PLAIN; 
+public enum   EncryptionType {
+    ROT13 ,  
+    REVERSE ,  
+    PLAIN;  
 
     public static EncryptionType toEnum(String encryptionType) {
         switch (encryptionType.toLowerCase()) {

@@ -1,11 +1,14 @@
-package spl.services; 
+package spl.services;  
 
-public  class  PlainEncryptionService  implements EncryptionService {
+public   class   PlainEncryptionService   implements EncryptionService {
+	
 	
     @Override
     public String encrypt(String text) {
         return text;
     }
+
+	
 
 	
 

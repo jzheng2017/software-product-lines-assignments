@@ -1,24 +1,29 @@
-package spl; 
+package spl;  
 
-import spl.services.ChatService; 
-import spl.services.ColorService; 
-import spl.services.MessageTransformer; 
-import spl.services.EncryptionServiceFactory; 
-import spl.services.EncryptionType; 
-import spl.services.FileLogService; 
-import spl.services.IdentityMessageTransformer; 
-import spl.services.ColorMessageTransformer; 
+import spl.services.ChatService;  
+import spl.services.ColorService;  
+import spl.services.MessageTransformer;  
+import spl.services.EncryptionServiceFactory;  
+import spl.services.EncryptionType;  
+import spl.services.FileLogService;  
+import spl.services.IdentityMessageTransformer;  
+import spl.services.ColorMessageTransformer;  
 
-import java.io.IOException; 
+import java.io.IOException;  
 
 
-public  class  ChatApp {
+public   class   ChatApp {
+	
 	
 
     private static ChatService chatService;
 
 	
+
+	
     private static MessageTransformer messageTransformer;
+
+	
 
 	
 
@@ -43,9 +48,13 @@ public  class  ChatApp {
 
 	
 
+	
+
     private static void useUsernameColor(boolean use) {
         messageTransformer = use ? new ColorMessageTransformer() : new IdentityMessageTransformer();
     }
+
+	
 
 	
 

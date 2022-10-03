@@ -1,14 +1,19 @@
-package spl.services; 
+package spl.services;  
 
-public  class  ColorMessageTransformer  implements MessageTransformer {
+public   class   ColorMessageTransformer   implements MessageTransformer {
+	
 	
     private ColorService colorService;
+
+	
 
 	
 
     public ColorMessageTransformer() {
         this.colorService = ColorService.getInstance();
     }
+
+	
 
 	
 

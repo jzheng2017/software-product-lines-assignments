@@ -1,33 +1,42 @@
-package spl; 
+package spl;  
 
-import spl.services.AuthenticationService; 
-import spl.services.ChatService; 
-import spl.services.ConsoleLogService; 
-import spl.services.FileLogService; 
-import spl.services.LogService; 
-import spl.services.PasswordAuthenticationService; 
+import spl.services.AuthenticationService;  
+import spl.services.ChatService;  
+import spl.services.ConsoleLogService;  
+import spl.services.FileLogService;  
+import spl.services.LogService;  
+import spl.services.PasswordAuthenticationService;  
 
-import java.io.BufferedReader; 
-import java.io.IOException; 
-import java.io.InputStream; 
-import java.io.InputStreamReader; 
-import java.io.OutputStream; 
-import java.io.PrintWriter; 
-import java.net.Socket; 
+import java.io.BufferedReader;  
+import java.io.IOException;  
+import java.io.InputStream;  
+import java.io.InputStreamReader;  
+import java.io.OutputStream;  
+import java.io.PrintWriter;  
+import java.net.Socket;  
 
 
-public  class  ServerThread  extends Thread {
+public   class   ServerThread   extends Thread {
+	
 	
     private final Socket skt;
+
+	
 
 	
     private final ChatService chatService;
 
 	
+
+	
     private final AuthenticationService authenticationService;
 
 	
+
+	
     private final LogService logger = new ConsoleLogService();
+
+	
 
 	
     public ServerThread(Socket socket, ChatService chatService) {
@@ -35,6 +44,8 @@ public  class  ServerThread  extends Thread {
         this.chatService = chatService;
         authenticationService = new PasswordAuthenticationService();
     }
+
+	
 
 	
 

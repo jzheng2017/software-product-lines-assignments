@@ -1,6 +1,7 @@
-package spl.services; 
+package spl.services;  
 
-public  class  IdentityMessageTransformer  implements MessageTransformer {
+public   class   IdentityMessageTransformer   implements MessageTransformer {
+	
 	
 
     @Override

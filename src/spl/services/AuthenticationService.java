@@ -1,6 +1,7 @@
-package spl.services; 
+package spl.services;  
 
-public  interface  AuthenticationService {
+public   interface   AuthenticationService {
+	
 	
     boolean authenticate(String authenticationDetails);
 

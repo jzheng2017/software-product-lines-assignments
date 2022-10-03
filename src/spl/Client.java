@@ -1,39 +1,54 @@
-package spl; 
+package spl;  
 
-import spl.services.ConsoleLogService; 
-import spl.services.LogService; 
+import spl.services.ConsoleLogService;  
+import spl.services.LogService;  
 
-import java.io.IOException; 
-import java.io.OutputStream; 
-import java.io.PrintWriter; 
-import java.net.Socket; 
-import java.net.UnknownHostException; 
-import java.util.logging.Level; 
-import java.util.logging.Logger; 
+import java.io.IOException;  
+import java.io.OutputStream;  
+import java.io.PrintWriter;  
+import java.net.Socket;  
+import java.net.UnknownHostException;  
+import java.util.logging.Level;  
+import java.util.logging.Logger;  
 
 
-public  class  Client {
+public   class   Client {
+	
 	
     private static final Logger logger = Logger.getLogger(Client.class.getName());
+
+	
 
 	
     public static boolean IS_AUTHENTICATED = false;
 
 	
+
+	
     private final String hostname;
 
 	
+
+	
     private final int port;
+
+	
 
 	
     private Socket skt;
 
 	
 
+	
+
     private final String username;
 
 	
+
+	
     private final LogService logService = new ConsoleLogService();
+
+	
 
 	
     public Client(String hname, int prt, String user) {
@@ -42,6 +57,8 @@ public  class  Client {
 
         username = user;
     }
+
+	
 
 	
 
@@ -60,6 +77,8 @@ public  class  Client {
 
 	
 
+	
+
     public void sendMessage(String message) {
         if (IS_AUTHENTICATED || message.contains("/auth")) {
             try {
@@ -73,6 +92,8 @@ public  class  Client {
             logger.log(Level.WARNING, "You are not authenticated to send messages");
         }
     }
+
+	
 
 	
 

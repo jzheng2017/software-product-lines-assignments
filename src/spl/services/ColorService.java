@@ -1,17 +1,24 @@
-package spl.services; 
+package spl.services;  
 
-public  class  ColorService {
+public   class   ColorService {
+	
 	
     private static ColorService colorService;
+
+	
 
 	
     private String color;
 
 	
 
+	
+
     private ColorService() {
 
     }
+
+	
 
 	
 
@@ -25,9 +32,13 @@ public  class  ColorService {
 
 	
 
+	
+
     public String getColor() {
         return this.color;
     }
+
+	
 
 	
 

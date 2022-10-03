@@ -1,24 +1,31 @@
-package spl; 
+package spl;  
 
-import spl.services.ConsoleLogService; 
-import spl.services.LogService; 
+import spl.services.ConsoleLogService;  
+import spl.services.LogService;  
 
-import java.io.BufferedReader; 
-import java.io.InputStream; 
-import java.io.InputStreamReader; 
-import java.net.Socket; 
+import java.io.BufferedReader;  
+import java.io.InputStream;  
+import java.io.InputStreamReader;  
+import java.net.Socket;  
 
-public  class  ClientThread  implements Runnable {
+public   class   ClientThread   implements Runnable {
+	
 	
     private final Socket skt;
+
+	
 
 	
     private final LogService logger = new ConsoleLogService();
 
 	
+
+	
     public ClientThread(Socket socket) {
         skt = socket;
     }
+
+	
 
 	
 

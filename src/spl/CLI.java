@@ -1,29 +1,36 @@
-package spl;
+package spl; 
 
-import spl.services.ChatService;
-import spl.services.MessageTransformer;
+import spl.services.ChatService; 
+import spl.services.MessageTransformer; 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.Scanner; 
 
 
-public class CLI extends Interface {
+public  class  CLI  extends Interface {
+	
 
     public CLI(ChatService cs, MessageTransformer messageTransformer) {
         super(cs, messageTransformer);
         initCLI();
     }
 
+	
+
     @Override
     public void init() {
         initCLI();
     }
 
+	
+
     @Override
     public void update() {
         updateChat();
     }
+
+	
 
     private void initCLI() {
         user.connect();
@@ -41,8 +48,10 @@ public class CLI extends Interface {
         updateChat();
     }
 
+	
+
     private void updateChat() {
-        List<String> prevChatLines = new ArrayList<>();
+        List<String> prevChatLines = new ArrayList<String>();
         while (true) {
             if (Client.IS_AUTHENTICATED) {
                 List<String> chatLines = chatService.readAll();
@@ -62,4 +71,6 @@ public class CLI extends Interface {
             }
         }
     }
+
+
 }

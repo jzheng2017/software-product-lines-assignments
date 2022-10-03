@@ -1,8 +1,11 @@
-package spl.services; 
+package spl.services;  
 
-public  interface  LogService {
+public   interface   LogService {
+	
 	
     void write(String message);
+
+	
 
 	
 

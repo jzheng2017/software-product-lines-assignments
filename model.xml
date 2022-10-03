@@ -16,7 +16,7 @@
 			<alt abstract="true" name="Encryption">
 				<feature name="Rot13"/>
 				<feature name="Reverse"/>
-				<feature name="None"/>
+				<feature name="NoEncryption"/>
 			</alt>
 			<feature name="UsernameColors"/>
 			<alt abstract="true" mandatory="true" name="UI">

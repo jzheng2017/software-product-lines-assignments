@@ -1,11 +1,14 @@
-package spl.services; 
+package spl.services;  
 
-public  class  ConsoleLogService  implements LogService {
+public   class   ConsoleLogService   implements LogService {
+	
 	
     @Override
     public void write(String message) {
         System.out.println(message);
     }
+
+	
 
 	
 
