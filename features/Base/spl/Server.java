@@ -18,8 +18,8 @@ public class Server {
 
     static public void startServer(int port) {
         chatService.clearChatLogs();
-
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+        try {
+        	ServerSocket serverSocket = new ServerSocket(port);
             logger.write("Server is listening on port " + port);
 
             while (true) {

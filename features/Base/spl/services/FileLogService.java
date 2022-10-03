@@ -10,8 +10,9 @@ public class FileLogService implements LogService {
 
     @Override
     public void write(String message) {
-        try (FileOutputStream outputStream = new FileOutputStream(FileConstants.FILE_NAME, true)) {
-            outputStream.write(message.getBytes());
+    	try {
+    		FileOutputStream outputStream = new FileOutputStream(FileConstants.FILE_NAME, true);
+    		outputStream.write(message.getBytes());
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Could not write to " + FileConstants.FILE_NAME, e);
         }

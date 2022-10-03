@@ -17,8 +17,8 @@ public class FileReader {
 
     public static List<String> readAll(String path) {
         Path filePath = Path.of(path);
-
-        try (Stream<String> stream = Files.lines(Paths.get(String.valueOf(filePath)), StandardCharsets.UTF_8)) {
+        try {
+        	Stream<String> stream = Files.lines(Paths.get(String.valueOf(filePath)), StandardCharsets.UTF_8);
             return stream.collect(Collectors.toList());
         } catch (IOException e) {
             logger.log(Level.WARNING, "Could not retrieve the file contents", e);
