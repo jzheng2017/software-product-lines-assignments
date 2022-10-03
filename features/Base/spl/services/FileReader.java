@@ -24,6 +24,6 @@ public class FileReader {
             logger.log(Level.WARNING, "Could not retrieve the file contents", e);
         }
 
-        return new ArrayList<>();
+        return new ArrayList<String>();
     }
 }
