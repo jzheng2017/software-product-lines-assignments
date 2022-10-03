@@ -61,8 +61,8 @@ public   class   ChatApp {
     public static void main(String[] args) throws IOException {
         determineEncryptionMethod("rot13");
         useUsernameColor(true);
-//        new GUI(chatService, messageTransformer);
-        new CLI(chatService, messageTransformer);
+        new GUI(chatService, messageTransformer);
+        //new CLI(chatService, messageTransformer);
     }
 
 

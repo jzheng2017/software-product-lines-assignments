@@ -1,12 +1,14 @@
 package spl.services;
 
 import java.io.IOException;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -16,9 +18,14 @@ public class FileReader {
     private static final Logger logger = Logger.getLogger(FileReader.class.getName());
 
     public static List<String> readAll(String path) {
-        Path filePath = Path.of(path);
+        File file = new File(path);
         try {
-        	List<String> lines = Files.readAllLines(Paths.get(String.valueOf(filePath)), StandardCharsets.UTF_8);
+        	Scanner input = new Scanner(file);
+        	List<String> lines = new ArrayList<String>();
+        	while (input.hasNextLine()) {
+        	    lines.add(input.nextLine());
+        	}
+        	input.close();
             return lines;
         } catch (IOException e) {
             logger.log(Level.WARNING, "Could not retrieve the file contents", e);

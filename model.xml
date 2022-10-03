@@ -20,7 +20,7 @@
 				<feature name="NoEncryption"/>
 			</alt>
 			<feature name="UsernameColors"/>
-			<alt abstract="true" mandatory="true" name="UI">
+			<alt abstract="true" name="UI">
 				<feature name="Console"/>
 				<feature name="GUI"/>
 			</alt>
