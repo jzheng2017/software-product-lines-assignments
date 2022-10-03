@@ -3,7 +3,6 @@
 	<properties>
 		<graphics key="autolayoutconstraints" value="false"/>
 		<graphics key="legendautolayout" value="true"/>
-		<graphics key="showconstraints" value="true"/>
 		<graphics key="showshortnames" value="false"/>
 		<graphics key="layout" value="horizontal"/>
 		<graphics key="showcollapsedconstraints" value="true"/>
@@ -12,11 +11,12 @@
 	</properties>
 	<struct>
 		<and abstract="true" mandatory="true" name="chatapp">
-			<graphics key="collapsed" value="false"/>
+			<feature mandatory="true" name="Base"/>
 			<feature name="Logging"/>
 			<alt abstract="true" name="Encryption">
 				<feature name="Rot13"/>
 				<feature name="Reverse"/>
+				<feature name="None"/>
 			</alt>
 			<feature name="UsernameColors"/>
 			<alt abstract="true" mandatory="true" name="UI">
