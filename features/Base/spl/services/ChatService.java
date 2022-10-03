@@ -17,12 +17,16 @@ public class ChatService {
     }
 
     public List<String> readAll() {
-        return FileReader
-                .readAll(FileConstants.FILE_NAME)
-                .stream()
-                .filter(line -> !line.isEmpty())
-                .map(line -> encryptionService.decrypt(line))
-                .collect(Collectors.toList());
+    	List<String> lines = FileReader.readAll(FileConstants.FILE_NAME);
+    	List<String> newLines = new ArrayList();
+    	
+    	for (String line : lines) {
+    		if (!line.isEmpty()) {
+    			newLines.add(encryptionService.decrypt(line));
+    		}
+    	}
+    	
+        return newLines;
     }
 
     public void clearChatLogs() {
