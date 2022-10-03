@@ -1,6 +1,7 @@
 package spl.services;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ChatService {
@@ -18,7 +19,7 @@ public class ChatService {
 
     public List<String> readAll() {
     	List<String> lines = FileReader.readAll(FileConstants.FILE_NAME);
-    	List<String> newLines = new ArrayList();
+    	List<String> newLines = new ArrayList<String>();
     	
     	for (String line : lines) {
     		if (!line.isEmpty()) {
