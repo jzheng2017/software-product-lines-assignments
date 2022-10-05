@@ -2,7 +2,7 @@ package spl;
 
 import spl.services.AuthenticationService;  
 import spl.services.ChatService;  
-import spl.services.ConsoleLogService;  
+//import spl.services.ConsoleLogService; 
 import spl.services.FileLogService;  
 import spl.services.LogService;  
 import spl.services.PasswordAuthenticationService;  

@@ -2,13 +2,13 @@
 <configuration>
 	<feature automatic="selected" name="chatapp"/>
 	<feature automatic="selected" name="Base"/>
-	<feature name="Logging"/>
-	<feature name="Encryption"/>
-	<feature name="Rot13"/>
-	<feature name="Reverse"/>
-	<feature name="NoEncryption"/>
-	<feature name="UsernameColors"/>
-	<feature name="UI"/>
-	<feature name="Console"/>
-	<feature name="GUI"/>
+	<feature manual="selected" name="Logging"/>
+	<feature automatic="selected" name="Encryption"/>
+	<feature automatic="unselected" name="Rot13"/>
+	<feature manual="selected" name="Reverse"/>
+	<feature automatic="unselected" name="PlainEncryption"/>
+	<feature manual="selected" name="UsernameColors"/>
+	<feature automatic="selected" manual="selected" name="UI"/>
+	<feature manual="selected" name="Console"/>
+	<feature automatic="unselected" name="GUI"/>
 </configuration>

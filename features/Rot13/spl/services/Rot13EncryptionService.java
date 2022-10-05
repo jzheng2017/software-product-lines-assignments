@@ -1,7 +1,6 @@
-package spl.services;  
+package spl.services; 
 
-public   class   Rot13EncryptionService   implements EncryptionService {
-	
+public class Rot13EncryptionService implements EncryptionService {
 	
     @Override
     public String encrypt(String text) {
@@ -10,17 +9,10 @@ public   class   Rot13EncryptionService   implements EncryptionService {
 
 	
 
-	
-
     @Override
     public String decrypt(String text) {
         return rot13(text);
     }
-
-	
-
-	
-
 
     private String rot13(String input) {
         StringBuilder sb = new StringBuilder();
