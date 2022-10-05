@@ -1,6 +1,6 @@
 package spl;  
 
-//import spl.services.ConsoleLogService; 
+import spl.services.ConsoleLogService;  
 import spl.services.LogService;  
 
 import java.io.BufferedReader;  

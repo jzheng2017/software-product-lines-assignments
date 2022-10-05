@@ -13,7 +13,6 @@
 	<struct>
 		<and abstract="true" mandatory="true" name="chatapp">
 			<feature mandatory="true" name="Base"/>
-			<feature name="Logging"/>
 			<alt abstract="true" name="Encryption">
 				<feature name="Rot13"/>
 				<feature name="Reverse"/>

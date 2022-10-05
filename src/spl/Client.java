@@ -1,5 +1,6 @@
 package spl;  
 
+import spl.services.ConsoleLogService;  
 import spl.services.LogService;  
 
 import java.io.IOException;  
@@ -45,6 +46,11 @@ public   class   Client {
 	
 
 	
+    private final LogService logService = new ConsoleLogService();
+
+	
+
+	
     public Client(String hname, int prt, String user) {
         hostname = hname;
         port = prt;
@@ -63,9 +69,9 @@ public   class   Client {
             receiver_thread.start();
 
         } catch (UnknownHostException ex) {
-        	
+            logService.write("Server not found: " + ex.getMessage());
         } catch (IOException ex) {
-        	
+            logService.write("I/O error: " + ex.getMessage());
         }
     }
 
@@ -80,7 +86,7 @@ public   class   Client {
                 PrintWriter writer = new PrintWriter(output, true);
                 writer.println(message);
             } catch (Exception e) {
-            	
+                logService.write(e.getMessage());
             }
         } else {
             logger.log(Level.WARNING, "You are not authenticated to send messages");
@@ -98,7 +104,7 @@ public   class   Client {
     		IS_AUTHENTICATED = false;
     	}
     	catch (Exception e) {
-    		
+    		logService.write(e.getMessage());
     	}
     }
 
