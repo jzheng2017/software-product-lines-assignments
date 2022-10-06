@@ -13,13 +13,13 @@
 	<struct>
 		<and abstract="true" mandatory="true" name="chatapp">
 			<feature mandatory="true" name="Base"/>
-			<alt abstract="true" name="Encryption">
+			<alt abstract="true" mandatory="true" name="Encryption">
 				<feature name="Rot13"/>
 				<feature name="Reverse"/>
 				<feature name="PlainEncryption"/>
 			</alt>
 			<feature name="UsernameColors"/>
-			<alt abstract="true" name="UI">
+			<alt abstract="true" mandatory="true" name="UI">
 				<feature name="Console"/>
 				<feature name="GUI"/>
 			</alt>

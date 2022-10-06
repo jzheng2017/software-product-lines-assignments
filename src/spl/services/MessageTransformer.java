@@ -1,9 +1,21 @@
 package spl.services;  
 
-public   interface   MessageTransformer {
+public    class   MessageTransformer {
+	
+
+    public String transform  (String msg) {
+        return String.format("[%s] %s", colorService.getColor(), msg);
+    }
+
 	
 	
-    String transform(String message);
+    private ColorService colorService;
+
+		
+
+    private void ColorMessageTransformer() {
+        this.colorService = ColorService.getInstance();
+    }
 
 
 }

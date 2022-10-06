@@ -1,7 +1,6 @@
 package spl; 
 
 import spl.services.ChatService; 
-import spl.services.ColorService; 
 import spl.services.MessageTransformer; 
 
 import javax.swing.*; 
@@ -19,6 +18,8 @@ public  class  GUI  extends Interface {
 
 	
     private JTextPane chatText = null;
+    
+    private JPanel optionsPane = null;
 
 	
     private JTextField chatLine = null;
@@ -64,11 +65,11 @@ public  class  GUI  extends Interface {
 
 	
 
-    private JPanel initOptionsPane() {
+    protected JPanel initOptionsPane() {
         ActionAdapter buttonListener = null;
 
         // Create an options pane
-        JPanel optionsPane = new JPanel(new GridLayout(4, 1));
+        optionsPane = new JPanel(new GridLayout(4, 1));
 
         // Connect/disconnect buttons
         JPanel buttonPane = new JPanel(new GridLayout(1, 2));
@@ -109,24 +110,24 @@ public  class  GUI  extends Interface {
         disconnectButton.addActionListener(buttonListener);
         disconnectButton.setEnabled(false);
 
-        //#if UsernameColors
-        String[] choices = {"Red", "Green", "Blue"};
-        final JComboBox<String> cb = new JComboBox<String>(choices);
-        cb.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                usernameColor = (String) cb.getSelectedItem();
-                ColorService.getInstance().setColor(usernameColor);
-                /*
-                 * String colorString = (String) cb.getSelectedItem();
-                 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
-                 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
-                 * { usernameColor = Color.blue; }
-                 */
-            }
-        });
-        cb.setVisible(true);
-        optionsPane.add(cb);
-        //#endif
+//        //#if UsernameColors
+//        String[] choices = {"Red", "Green", "Blue"};
+//        final JComboBox<String> cb = new JComboBox<String>(choices);
+//        cb.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                usernameColor = (String) cb.getSelectedItem();
+//                ColorService.getInstance().setColor(usernameColor);
+//                /*
+//                 * String colorString = (String) cb.getSelectedItem();
+//                 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
+//                 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
+//                 * { usernameColor = Color.blue; }
+//                 */
+//            }
+//        });
+//        cb.setVisible(true);
+//        optionsPane.add(cb);
+//        //#endif
 
         buttonPane.add(connectButton);
         buttonPane.add(disconnectButton);

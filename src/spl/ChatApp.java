@@ -1,31 +1,26 @@
-package spl;  
+package spl; 
 
-import spl.services.ChatService;  
-import spl.services.ColorService;  
-import spl.services.MessageTransformer;  
-import spl.services.EncryptionServiceFactory;  
-import spl.services.EncryptionType;  
-import spl.services.FileLogService;  
-import spl.services.IdentityMessageTransformer;  
-import spl.services.ColorMessageTransformer;  
+import spl.services.ChatService; 
+import spl.services.MessageTransformer; 
+import spl.services.EncryptionService; 
+import spl.services.FileLogService; 
 
-import java.io.IOException;  
+import java.io.IOException; 
 
 
-public    class   ChatApp {
-	
+public  class  ChatApp {
 	
 
-    private static ChatService chatService  ;
+    private static ChatService chatService;
+
+	
+    private static MessageTransformer messageTransformer;
 
 	
 
-	
-    private static MessageTransformer messageTransformer  ;
-
-	
-	
-    public static void main  (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
+    	chatService = new ChatService(new FileLogService(), new EncryptionService());
+    	messageTransformer = new MessageTransformer();
         new GUI(chatService, messageTransformer);
 //        new CLI(chatService, messageTransformer);
     }
