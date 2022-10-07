@@ -78,7 +78,7 @@ public abstract   class  Interface {
         init();
         update();
     
-    	original(chatService, messageTransformer);
+    	Interface inter = original(chatService, messageTransformer);
     	ColorService.getInstance().setColor(usernameColor);
     }
 

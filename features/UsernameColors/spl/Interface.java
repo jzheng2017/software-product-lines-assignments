@@ -9,7 +9,7 @@ public class Interface {
 	
     public Interface(ChatService chatService, MessageTransformer messageTransformer)
     {
-    	original(chatService, messageTransformer);
+    	Interface inter = original(chatService, messageTransformer);
     	ColorService.getInstance().setColor(usernameColor);
     }
 }

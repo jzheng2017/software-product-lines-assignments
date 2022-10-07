@@ -6,14 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import spl.GUI;
+import spl.UI;
 import spl.services.ColorService;
 
-public class GUI extends Interface {
+public class UI extends Interface {
 	
 	protected JPanel initOptionsPanel()
 	{
-		original();
+		JPanel lPanel = original();
 		String[] choices = {"Red", "Green", "Blue"};
 	    final JComboBox<String> cb = new JComboBox<String>(choices);
 	    cb.addActionListener(new ActionListener() {

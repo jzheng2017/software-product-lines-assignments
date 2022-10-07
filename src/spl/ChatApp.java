@@ -21,8 +21,9 @@ public  class  ChatApp {
     public static void main(String[] args) throws IOException {
     	chatService = new ChatService(new FileLogService(), new EncryptionService());
     	messageTransformer = new MessageTransformer();
-        new GUI(chatService, messageTransformer);
-//        new CLI(chatService, messageTransformer);
+    	new UI(chatService, messageTransformer);
+        //new GUI(chatService, messageTransformer);
+		//new CLI(chatService, messageTransformer);
     }
 
 
