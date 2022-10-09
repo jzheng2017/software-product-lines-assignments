@@ -49,7 +49,6 @@ public abstract  class  Interface {
     public Interface(ChatService chatService, MessageTransformer messageTransformer) {
         this.chatService = chatService;
         this.messageTransformer = messageTransformer;
-//        ColorService.getInstance().setColor(usernameColor);
         init();
         update();
     }

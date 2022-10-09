@@ -6,7 +6,7 @@
 	<feature automatic="unselected" name="Rot13"/>
 	<feature manual="selected" name="Reverse"/>
 	<feature automatic="unselected" name="PlainEncryption"/>
-	<feature name="UsernameColors"/>
+	<feature manual="selected" name="UsernameColors"/>
 	<feature automatic="selected" manual="selected" name="UI"/>
 	<feature automatic="unselected" name="Console"/>
 	<feature manual="selected" name="GUI"/>

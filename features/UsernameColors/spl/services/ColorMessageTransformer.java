@@ -4,8 +4,9 @@ public  class  ColorMessageTransformer implements MessageTransformer{
 	
     private ColorService colorService;	
 
-    private void ColorMessageTransformer() {
+    public ColorMessageTransformer() {
         this.colorService = ColorService.getInstance();
+        this.colorService.setColor("Red");
     }
 
     public String transform(String msg) {

@@ -1,10 +1,10 @@
 package spl.services;  
 
-public   class   EncryptionServiceFactory {
+public  class  EncryptionServiceFactory {
 	
 	
     public static EncryptionService createEncryptionService() {
-    	return new ReverseStringEncryptionService();
+         return new Rot13EncryptionService();
     }
 
 
