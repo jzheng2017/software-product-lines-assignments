@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="chatapp"/>
+	<feature automatic="selected" name="Base"/>
+	<feature automatic="selected" name="Encryption"/>
+	<feature automatic="unselected" name="Rot13"/>
+	<feature manual="selected" name="Reverse"/>
+	<feature automatic="unselected" name="PlainEncryption"/>
+	<feature name="UsernameColors"/>
+	<feature automatic="selected" manual="selected" name="UI"/>
+	<feature automatic="unselected" name="Console"/>
+	<feature manual="selected" name="GUI"/>
+</configuration>
