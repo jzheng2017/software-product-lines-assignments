@@ -18,11 +18,11 @@
 				<feature name="Reverse"/>
 				<feature name="PlainEncryption"/>
 			</alt>
-			<feature name="UsernameColors"/>
 			<alt abstract="true" mandatory="true" name="UI">
 				<feature name="Console"/>
 				<feature name="GUI"/>
 			</alt>
+			<feature name="UsernameColors"/>
 			<feature name="MessageSound"/>
 		</and>
 	</struct>

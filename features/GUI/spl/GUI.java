@@ -104,40 +104,24 @@ public  class  GUI  extends Interface {
         connectButton.setActionCommand("connect");
         connectButton.addActionListener(buttonListener);
         connectButton.setEnabled(true);
+        
         disconnectButton = new JButton("Disconnect");
         disconnectButton.setMnemonic(KeyEvent.VK_D);
         disconnectButton.setActionCommand("disconnect");
         disconnectButton.addActionListener(buttonListener);
         disconnectButton.setEnabled(false);
 
-//        //#if UsernameColors
-//        String[] choices = {"Red", "Green", "Blue"};
-//        final JComboBox<String> cb = new JComboBox<String>(choices);
-//        cb.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                usernameColor = (String) cb.getSelectedItem();
-//                ColorService.getInstance().setColor(usernameColor);
-//                /*
-//                 * String colorString = (String) cb.getSelectedItem();
-//                 * if(colorString == "Red") { usernameColor = Color.red; } else if (colorString
-//                 * == "Green") { usernameColor = Color.green; } else if (colorString == "Blue")
-//                 * { usernameColor = Color.blue; }
-//                 */
-//            }
-//        });
-//        cb.setVisible(true);
-//        optionsPane.add(cb);
-//        //#endif
-
         buttonPane.add(connectButton);
         buttonPane.add(disconnectButton);
         optionsPane.add(buttonPane);
-
+        colorCmb();
         return optionsPane;
     }
 
-	
-
+    private void colorCmb() {
+    	
+    }
+    
     private void initGUI() {
         // Set up the status bar
         statusBar = new JLabel();
@@ -183,7 +167,6 @@ public  class  GUI  extends Interface {
         mainFrame.pack();
         mainFrame.setVisible(true);
     }
-
 	
 
     private void updateChat() {
