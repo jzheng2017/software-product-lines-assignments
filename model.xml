@@ -23,6 +23,7 @@
 				<feature name="Console"/>
 				<feature name="GUI"/>
 			</alt>
+			<feature name="MessageSound"/>
 		</and>
 	</struct>
 </featureModel>

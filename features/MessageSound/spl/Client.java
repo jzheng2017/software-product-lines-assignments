@@ -2,7 +2,8 @@ package spl;
 
 import spl.services.ConsoleLogService; 
 import spl.services.LogService; 
-
+import spl.services.MessageSound;
+import spl.services.ToolkitMessageSound;
 import java.io.IOException; 
 import java.io.OutputStream; 
 import java.io.PrintWriter; 
@@ -34,13 +35,8 @@ public  class  Client {
 
 	
     private final LogService logService = new ConsoleLogService();
-
-    public Client(String hname, int prt, String user) {
-        hostname = hname;
-        port = prt;
-
-        username = user;
-    }
+    private final MessageSound messageSound = new ToolkitMessageSound();
+    
 
 	
 
@@ -65,6 +61,7 @@ public  class  Client {
                 OutputStream output = skt.getOutputStream();
                 PrintWriter writer = new PrintWriter(output, true);
                 writer.println(message);
+                messageSound.beep();
             } catch (Exception e) {
                 logService.write(e.getMessage());
             }

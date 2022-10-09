@@ -50,7 +50,6 @@ public   class   Client {
 
 	
 
-	
     public Client(String hname, int prt, String user) {
         hostname = hname;
         port = prt;

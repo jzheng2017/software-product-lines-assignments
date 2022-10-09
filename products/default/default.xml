@@ -3,11 +3,12 @@
 	<feature automatic="selected" name="chatapp"/>
 	<feature automatic="selected" name="Base"/>
 	<feature automatic="selected" name="Encryption"/>
-	<feature automatic="unselected" name="Rot13"/>
-	<feature manual="selected" name="Reverse"/>
+	<feature manual="selected" name="Rot13"/>
+	<feature automatic="unselected" name="Reverse"/>
 	<feature automatic="unselected" name="PlainEncryption"/>
-	<feature manual="selected" name="UsernameColors"/>
+	<feature name="UsernameColors"/>
 	<feature automatic="selected" manual="selected" name="UI"/>
 	<feature automatic="unselected" name="Console"/>
 	<feature manual="selected" name="GUI"/>
+	<feature name="MessageSound"/>
 </configuration>
