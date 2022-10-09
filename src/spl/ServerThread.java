@@ -72,7 +72,7 @@ public   class   ServerThread   extends Thread {
                     writer.println(authenticationService.authenticate(message));
                     continue;
                 }
-                
+
                 writer.println("Message received");
                 logger.write("Received message: " + message);
                 chatService.sendMessage(message + "\n");

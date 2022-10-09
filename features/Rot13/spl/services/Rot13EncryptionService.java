@@ -1,12 +1,12 @@
 package spl.services; 
 
-public class EncryptionService {
+public class Rot13EncryptionService implements EncryptionService {
 	
-    protected String encrypt(String text) {
+    public String encrypt(String text) {
         return rot13(text);
     }
 
-    protected String decrypt(String text) {
+    public String decrypt(String text) {
         return rot13(text);
     }
 

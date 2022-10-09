@@ -1,9 +1,6 @@
 package spl.services; 
 
-public  class  MessageTransformer {
+public interface  MessageTransformer {
 	
-    public String transform(String message)
-    {
-    	return message;
-    }
+    String transform(String message);
 }

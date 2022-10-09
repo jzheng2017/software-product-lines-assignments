@@ -1,6 +1,6 @@
 package spl.services; 
 
-public  class  MessageTransformer{
+public  class  ColorMessageTransformer implements MessageTransformer{
 	
     private ColorService colorService;	
 

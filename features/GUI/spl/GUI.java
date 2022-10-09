@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import java.util.List; 
 
 
-public  class  UI  extends Interface {
+public  class  GUI  extends Interface {
 	
     // Various GUI components and info
     private JFrame mainFrame = null;
@@ -45,7 +45,7 @@ public  class  UI  extends Interface {
 	
 
 
-    public UI(ChatService cs, MessageTransformer messageTransformer) {
+    public GUI(ChatService cs, MessageTransformer messageTransformer) {
         super(cs, messageTransformer);
     }
 

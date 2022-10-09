@@ -3,7 +3,6 @@ package spl;
 import spl.services.ChatService;
 import spl.services.ConsoleLogService;
 import spl.services.EncryptionServiceFactory;
-import spl.services.EncryptionType;
 import spl.services.FileLogService;
 import spl.services.LogService;
 

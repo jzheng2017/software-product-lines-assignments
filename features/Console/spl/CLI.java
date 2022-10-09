@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class UI extends Interface {
+public class CLI extends Interface {
 
-    public UI(ChatService cs, MessageTransformer messageTransformer) {
+    public CLI(ChatService cs, MessageTransformer messageTransformer) {
         super(cs, messageTransformer);
         initCLI();
     }

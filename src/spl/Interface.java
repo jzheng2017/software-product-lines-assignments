@@ -1,13 +1,11 @@
-package spl; 
+package spl;  
 
-import spl.services.ChatService; 
+import spl.services.ChatService;  
 import spl.services.MessageTransformer;  
 import spl.services.ConsoleLogService;  
-import spl.services.LogService; 
-import spl.services.ColorService; 
-import spl.Interface; 
+import spl.services.LogService;  
 
-public abstract   class  Interface {
+public abstract   class   Interface {
 	
 	
     protected final LogService logger = new ConsoleLogService();
@@ -70,16 +68,15 @@ public abstract   class  Interface {
     protected String usernameColor = "Red";
 
 	
+
 	
-    public Interface  (ChatService chatService, MessageTransformer messageTransformer) {
+
+    public Interface(ChatService chatService, MessageTransformer messageTransformer) {
         this.chatService = chatService;
         this.messageTransformer = messageTransformer;
 //        ColorService.getInstance().setColor(usernameColor);
         init();
         update();
-    
-    	Interface inter = original(chatService, messageTransformer);
-    	ColorService.getInstance().setColor(usernameColor);
     }
 
 	
