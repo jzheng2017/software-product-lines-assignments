@@ -35,25 +35,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        determineEncryptionMethod("rot13");
+    	chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService());
         startServer(1234);
-    }
-
-    private static void determineEncryptionMethod(String encryptionType) {
-        boolean encryptionDecided = false;
-        
-        if(encryptionType.equals("rot13"))
-        {
-        	chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.ROT13));
-        	encryptionDecided = true;
-        }
-        else if(encryptionType.equals("reverse"))
-        {
-        	chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.REVERSE));
-        	encryptionDecided = true;
-        }
-        if (!encryptionDecided) {
-            chatService = new ChatService(new FileLogService(), EncryptionServiceFactory.createEncryptionService(EncryptionType.PLAIN));
-        }
     }
 }

@@ -4,9 +4,9 @@
 	<feature automatic="selected" name="Base"/>
 	<feature automatic="selected" name="Encryption"/>
 	<feature automatic="unselected" name="Rot13"/>
-	<feature automatic="unselected" name="Reverse"/>
-	<feature manual="selected" name="PlainEncryption"/>
-	<feature manual="selected" name="UsernameColors"/>
+	<feature manual="selected" name="Reverse"/>
+	<feature automatic="unselected" name="PlainEncryption"/>
+	<feature name="UsernameColors"/>
 	<feature automatic="selected" manual="selected" name="UI"/>
 	<feature automatic="unselected" name="Console"/>
 	<feature manual="selected" name="GUI"/>
