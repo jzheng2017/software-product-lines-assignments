@@ -1,16 +1,12 @@
 package spl.services; 
 
-public class Rot13EncryptionService implements EncryptionService {
+public class EncryptionService {
 	
-    @Override
-    public String encrypt(String text) {
+    protected String encrypt(String text) {
         return rot13(text);
     }
 
-	
-
-    @Override
-    public String decrypt(String text) {
+    protected String decrypt(String text) {
         return rot13(text);
     }
 
