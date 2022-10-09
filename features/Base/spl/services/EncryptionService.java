@@ -1,12 +1,13 @@
 package spl.services; 
 
-public  interface  EncryptionService {
-	
-    String encrypt(String text);
-
-	
-
-    String decrypt(String text);
-
-
+public  class  EncryptionService {
+    protected String encrypt(String text)
+    {
+    	return text;
+    }
+    
+    protected String decrypt(String text)
+    {
+    	return text;
+    }
 }

@@ -1,7 +1,6 @@
 package spl; 
 
 import spl.services.ChatService; 
-import spl.services.ColorService; 
 import spl.services.MessageTransformer; 
 import spl.services.ConsoleLogService; 
 import spl.services.LogService; 
@@ -50,7 +49,7 @@ public abstract  class  Interface {
     public Interface(ChatService chatService, MessageTransformer messageTransformer) {
         this.chatService = chatService;
         this.messageTransformer = messageTransformer;
-        ColorService.getInstance().setColor(usernameColor);
+//        ColorService.getInstance().setColor(usernameColor);
         init();
         update();
     }
