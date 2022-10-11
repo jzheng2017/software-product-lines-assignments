@@ -99,3 +99,4 @@ fabric.properties
 /bin/
 
 .vscode
+!.vscode/launch.json

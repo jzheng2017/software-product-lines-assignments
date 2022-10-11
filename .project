@@ -22,17 +22,12 @@
 				</dictionary>
 				<dictionary>
 					<key>source</key>
-					<value>features</value>
+					<value>src</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.ajdt.core.ajbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>core.eclipse.ajdt.core.ajbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -44,7 +39,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1664805374099</id>
+			<id>1665491489214</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
