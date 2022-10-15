@@ -3,7 +3,7 @@ package spl;
 import java.io.PrintWriter;
 import java.awt.Toolkit;
 
-public aspect BeepAspect {
+public aspect Beeping {
 
 	
     pointcut sendMessage() : call(* PrintWriter.println(String));

@@ -21,6 +21,7 @@
 				<feature name="Console"/>
 				<feature name="GUI"/>
 			</alt>
+			<feature name="Beeping"/>
 		</and>
 	</struct>
 </featureModel>

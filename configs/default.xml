@@ -9,4 +9,5 @@
 	<feature automatic="selected" name="UI"/>
 	<feature automatic="unselected" name="Console"/>
 	<feature manual="selected" name="GUI"/>
+	<feature name="Beeping"/>
 </configuration>
