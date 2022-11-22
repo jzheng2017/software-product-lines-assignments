@@ -1,4 +1,4 @@
-package spl.texteditor; 
+package spl.texteditor;
 
 import java.io.File;
 
@@ -19,6 +19,7 @@ public class PrimaryController {
     @FXML
     private Stage stage;
     private ReadWriteService readWriteService = new FileReadWriteService();
+
     @FXML
     public void onOpenFileAction() {
         FileChooser fileChooser = new FileChooser();

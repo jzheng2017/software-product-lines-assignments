@@ -11,7 +11,7 @@ public class FileTextStorageService implements TextStorageService {
     @Override
     public InputStream retrieve(String identifier) {
         try {
-        	LOGGER.info("Retrieving contents of file '{}'", identifier);
+            LOGGER.info("Retrieving contents of file '{}'", identifier);
             return new FileInputStream(identifier);
         } catch (FileNotFoundException ex) {
             LOGGER.warn("Could not find file with identifier/path '{}'", identifier);
@@ -47,12 +47,12 @@ public class FileTextStorageService implements TextStorageService {
     }
 
     private void writingToFile(String identifier, String content) throws IOException {
-    	FileOutputStream fileOutputStream = new FileOutputStream(identifier);
-    	try {
-    		LOGGER.info("Writing to file '{}'", identifier);
+        FileOutputStream fileOutputStream = new FileOutputStream(identifier);
+        try {
+            LOGGER.info("Writing to file '{}'", identifier);
             fileOutputStream.write(content.getBytes());
-    	} finally {
-        	fileOutputStream.close();
-    	}
+        } finally {
+            fileOutputStream.close();
+        }
     }
 }

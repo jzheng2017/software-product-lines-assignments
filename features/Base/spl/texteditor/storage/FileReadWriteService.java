@@ -18,21 +18,21 @@ public class FileReadWriteService implements ReadWriteService {
         this.lastFileRead = identifier;
         FileInputStream fileInputStream = null;
         try {
-        	LOGGER.info("Reading file '{}'", identifier);
-        	fileInputStream  = (FileInputStream) storageService.retrieve(identifier);
+            LOGGER.info("Reading file '{}'", identifier);
+            fileInputStream = (FileInputStream) storageService.retrieve(identifier);
             byte[] file = fileInputStream.readAllBytes();
             return new String(file);
         } catch (IOException ex) {
             LOGGER.warn("Something went wrong while reading file..", ex);
             return null;
         } finally {
-        	if (fileInputStream != null) {
-        		try {
-        			fileInputStream.close();
-        		} catch (IOException ex) {
-        			LOGGER.warn("Something went wrong while trying to close file..", ex);
-        		}
-        	}
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException ex) {
+                    LOGGER.warn("Something went wrong while trying to close file..", ex);
+                }
+            }
         }
     }
 
