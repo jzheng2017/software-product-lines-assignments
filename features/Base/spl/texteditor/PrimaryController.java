@@ -12,9 +12,8 @@ import javafx.stage.Stage;
 import spl.texteditor.storage.FileReadWriteService;
 import spl.texteditor.storage.ReadWriteService;
 
-public  class  PrimaryController {
+public class PrimaryController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryController.class);
-
     @FXML
     private TextArea textArea;
     @FXML
@@ -25,6 +24,7 @@ public  class  PrimaryController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a file you want to edit");
         File file = fileChooser.showOpenDialog(stage);
+
         textArea.setText(readWriteService.read(file.getPath()));
     }
 
@@ -32,10 +32,13 @@ public  class  PrimaryController {
     public void onFileSave() {
         String lastFileRead = readWriteService.lastFileRead();
         String contents = textArea.getText();
-        if (lastFileRead == null || lastFileRead.isEmpty() || lastFileRead.isBlank()) {
+        boolean isNewFile = lastFileRead == null || lastFileRead.isEmpty() || lastFileRead.isBlank();
+
+        if (isNewFile) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save");
             File file = fileChooser.showSaveDialog(stage);
+
             readWriteService.write(file.getPath(), contents);
         } else {
             readWriteService.write(lastFileRead, contents);
