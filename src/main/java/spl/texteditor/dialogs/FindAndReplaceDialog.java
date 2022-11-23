@@ -33,7 +33,7 @@ public  class  FindAndReplaceDialog  implements Dialog<FindAndReplaceResult> {
 
 	
 
-    private static void configureControls(javafx.scene.control.Dialog<FindAndReplaceResult> findAndReplaceDialog) {
+    private void configureControls(javafx.scene.control.Dialog<FindAndReplaceResult> findAndReplaceDialog) {
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
 
         findAndReplaceDialog

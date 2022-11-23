@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import spl.texteditor.dialogs.*;
 import spl.texteditor.dialogs.Dialog;
 import spl.texteditor.dialogs.SaveFileDialog;
+import spl.texteditor.dialogs.OpenFileDialog;
 import spl.texteditor.storage.LocalFileSystemReadWriteService;
 import spl.texteditor.storage.ReadWriteService;
 
@@ -29,7 +30,7 @@ public class PrimaryController {
 
     @FXML
     public void onOpenFileAction() {
-        Dialog<File> fileDialog = new SaveFileDialog(stage);
+        Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
         textArea.setText(readWriteService.read(file.getPath()));
     }
