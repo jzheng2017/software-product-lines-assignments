@@ -7,17 +7,25 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField; 
 import javafx.scene.layout.GridPane; 
 import javafx.util.Callback; 
+import org.slf4j.Logger; 
+import org.slf4j.LoggerFactory; 
 
 import java.util.Map; 
 import java.util.NoSuchElementException; 
 
 public  class  FindAndReplaceDialog  implements Dialog<FindAndReplaceResult> {
 	
+    private static final Logger LOGGER = LoggerFactory.getLogger(FindAndReplaceDialog.class);
+
+	
+
     @Override
     public FindAndReplaceResult openAndWait(Map<String, String> args) {
+        LOGGER.info("Find and replace dialog opened");
         javafx.scene.control.Dialog findAndReplaceDialog = new javafx.scene.control.Dialog();
         configureLabels(args, findAndReplaceDialog);
         configureControls(findAndReplaceDialog);
+
         try {
             return (FindAndReplaceResult)findAndReplaceDialog.showAndWait().get();
         } catch (NoSuchElementException ex) {
@@ -40,12 +48,12 @@ public  class  FindAndReplaceDialog  implements Dialog<FindAndReplaceResult> {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20, 10, 10, 10));
 
-        TextField find = new TextField();
-        find.setPromptText("Find");
-        TextField replace = new TextField();
-        replace.setPromptText("Replace");
-        gridPane.add(find, 0, 0);
-        gridPane.add(replace, 0, 1);
+        TextField findTextField = new TextField();
+        findTextField.setPromptText("Find");
+        TextField replaceTextField = new TextField();
+        replaceTextField.setPromptText("Replace");
+        gridPane.add(findTextField, 0, 0);
+        gridPane.add(replaceTextField, 0, 1);
 
         findAndReplaceDialog.getDialogPane().setContent(gridPane);
 
@@ -55,9 +63,11 @@ public  class  FindAndReplaceDialog  implements Dialog<FindAndReplaceResult> {
                 boolean okButtonClicked = okButtonType == buttonType;
 
                 if (okButtonClicked) {
-                    return new FindAndReplaceResult(find.getText(), replace.getText());
+                    LOGGER.info("Find and replaceTextField dialog completed with: find {}, replace: {}", findTextField.getText(), replaceTextField.getText());
+                    return new FindAndReplaceResult(findTextField.getText(), replaceTextField.getText());
                 }
 
+                LOGGER.info("Find and replaceTextField dialog cancelled");
                 return new FindAndReplaceResult("", "");
             }
         });
