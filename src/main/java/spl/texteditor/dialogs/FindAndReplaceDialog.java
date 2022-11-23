@@ -26,11 +26,9 @@ public  class  FindAndReplaceDialog  implements Dialog<FindAndReplaceResult> {
         configureLabels(args, findAndReplaceDialog);
         configureControls(findAndReplaceDialog);
 
-        try {
-            return (FindAndReplaceResult)findAndReplaceDialog.showAndWait().get();
-        } catch (NoSuchElementException ex) {
-            return new FindAndReplaceResult("", "");
-        }
+        return (FindAndReplaceResult) findAndReplaceDialog
+                .showAndWait()
+                .orElse(new FindAndReplaceResult("", ""));
     }
 
 	
@@ -79,7 +77,7 @@ public  class  FindAndReplaceDialog  implements Dialog<FindAndReplaceResult> {
         String title = args.get("title");
         String content = args.get("content");
         findAndReplaceDialog.setTitle(title != null ? title : "Find and replace");
-        findAndReplaceDialog.setContentText(content != null ? title: "Enter a text that you want to be replaced");
+        findAndReplaceDialog.setContentText(content != null ? title : "Enter a text that you want to be replaced");
     }
 
 
