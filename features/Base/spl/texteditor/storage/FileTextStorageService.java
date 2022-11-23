@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-public class FileTextStorageService implements TextStorageService {
+class FileTextStorageService implements TextStorageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileTextStorageService.class);
 
     @Override

@@ -1,15 +1,22 @@
 package spl.texteditor;
 
 import java.io.File;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.stage.FileChooser;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import spl.texteditor.storage.FileReadWriteService;
+import spl.texteditor.dialogs.*;
+import spl.texteditor.dialogs.Dialog;
+import spl.texteditor.dialogs.SaveFileDialog;
+import spl.texteditor.storage.LocalFileSystemReadWriteService;
 import spl.texteditor.storage.ReadWriteService;
 
 public class PrimaryController {
@@ -18,14 +25,12 @@ public class PrimaryController {
     private TextArea textArea;
     @FXML
     private Stage stage;
-    private ReadWriteService readWriteService = new FileReadWriteService();
+    private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
 
     @FXML
     public void onOpenFileAction() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose a file you want to edit");
-        File file = fileChooser.showOpenDialog(stage);
-
+        Dialog<File> fileDialog = new SaveFileDialog(stage);
+        File file = fileDialog.openAndWait(Map.of());
         textArea.setText(readWriteService.read(file.getPath()));
     }
 
@@ -36,13 +41,23 @@ public class PrimaryController {
         boolean isNewFile = lastFileRead == null || lastFileRead.isEmpty() || lastFileRead.isBlank();
 
         if (isNewFile) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save");
-            File file = fileChooser.showSaveDialog(stage);
-
+            Dialog<File> fileDialog = new SaveFileDialog(stage);
+            File file = fileDialog.openAndWait(Map.of());
             readWriteService.write(file.getPath(), contents);
         } else {
             readWriteService.write(lastFileRead, contents);
+        }
+    }
+
+    @FXML
+    public void onKeyPressed(KeyEvent event) {
+        KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+        if (ctrlAndF.match(event)) {
+            Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
+            final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
+            if (result.isValid()) {
+                textArea.setText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+            }
         }
     }
 }

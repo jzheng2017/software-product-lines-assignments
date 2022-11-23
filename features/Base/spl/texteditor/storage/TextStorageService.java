@@ -6,7 +6,7 @@ import java.io.OutputStream;
 /**
  * A service allowing you to retrieve and store from a particular source
  */
-public interface TextStorageService {
+interface TextStorageService {
     /**
      * Retrieving data from a specific source
      *

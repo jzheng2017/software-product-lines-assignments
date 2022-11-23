@@ -1,7 +1,7 @@
 package spl.texteditor.storage;
 
 /**
- * A service allowing you to read and write to/from a source
+ * A service allowing you to read and write from/to a source
  */
 public interface ReadWriteService {
 

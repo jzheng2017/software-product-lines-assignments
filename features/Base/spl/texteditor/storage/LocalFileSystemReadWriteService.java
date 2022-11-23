@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class FileReadWriteService implements ReadWriteService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileReadWriteService.class);
-
+public class LocalFileSystemReadWriteService implements ReadWriteService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileSystemReadWriteService.class);
     private TextStorageService storageService = new FileTextStorageService();
     private String lastFileRead;
     private String lastFileWritten;
