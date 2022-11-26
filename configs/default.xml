@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
 	<feature automatic="selected" name="texteditor"/>
-	<feature manual="selected" name="Base"/>
+	<feature automatic="selected" name="Base"/>
+	<feature name="FindAndReplace"/>
 </configuration>

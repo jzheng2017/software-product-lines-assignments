@@ -12,7 +12,8 @@
 	</properties>
 	<struct>
 		<and abstract="true" mandatory="true" name="texteditor">
-			<feature name="Base"/>
+			<feature mandatory="true" name="Base"/>
+			<feature name="FindAndReplace"/>
 		</and>
 	</struct>
 </featureModel>
