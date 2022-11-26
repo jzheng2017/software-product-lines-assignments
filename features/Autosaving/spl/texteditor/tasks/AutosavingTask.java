@@ -2,6 +2,7 @@ package spl.texteditor.tasks;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spl.texteditor.ContentProvider;
 import spl.texteditor.storage.ReadWriteService;
 
 public class AutosavingTask implements Runnable {
