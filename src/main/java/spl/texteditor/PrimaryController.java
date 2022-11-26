@@ -2,7 +2,6 @@ package spl.texteditor;
 
 import java.io.File; 
 import java.util.Map; 
-
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory; 
 
@@ -19,10 +18,11 @@ import spl.texteditor.dialogs.SaveFileDialog;
 import spl.texteditor.dialogs.OpenFileDialog; 
 import spl.texteditor.storage.LocalFileSystemReadWriteService; 
 import spl.texteditor.storage.ReadWriteService; 
+import spl.texteditor.tasks.*; 
 
-public  class  PrimaryController {
+public   class  PrimaryController {
 	
-    private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryController.class);
+    private static final Logger LOGGER  = LoggerFactory.getLogger(PrimaryController.class);
 
 	
     @FXML
@@ -33,7 +33,7 @@ public  class  PrimaryController {
     private Stage stage;
 
 	
-    private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
+    private ReadWriteService readWriteService  = new LocalFileSystemReadWriteService();
 
 	
 
@@ -74,6 +74,27 @@ public  class  PrimaryController {
     @FXML
     public void onKeyPressed(KeyEvent event) {
     	
+    }
+
+	
+
+    private TaskExecutorService taskExecutorService = new ScheduledExecutorTaskService();
+
+	
+
+    @FXML
+    void initialize() {
+        taskExecutorService.executeTask(new ScheduledTask(
+                new AutosavingTask(readWriteService, new ContentProvider() {
+
+                    @Override
+                    public String getText() {
+                        return textArea.getText();
+                    }
+                }),
+                5,
+                true
+        ));
     }
 
 

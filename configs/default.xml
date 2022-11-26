@@ -3,4 +3,5 @@
 	<feature automatic="selected" name="texteditor"/>
 	<feature automatic="selected" name="Base"/>
 	<feature name="FindAndReplace"/>
+	<feature manual="selected" name="Autosaving"/>
 </configuration>

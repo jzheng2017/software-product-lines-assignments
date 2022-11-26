@@ -14,6 +14,7 @@
 		<and abstract="true" mandatory="true" name="texteditor">
 			<feature mandatory="true" name="Base"/>
 			<feature name="FindAndReplace"/>
+			<feature name="Autosaving"/>
 		</and>
 	</struct>
 </featureModel>
