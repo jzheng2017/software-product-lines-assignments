@@ -41,9 +41,10 @@ public  class  PrimaryController {
     public void onOpenFileAction() {
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
-        if(file != null)
-        {
+        if(file != null) {
         	textArea.setText(readWriteService.read(file.getPath()));
+        } else {
+        	LOGGER.warn("No file was selected.");
         }
     }
 
@@ -58,9 +59,10 @@ public  class  PrimaryController {
         if (isNewFile) {
             Dialog<File> fileDialog = new SaveFileDialog(stage);
             File file = fileDialog.openAndWait(Map.of());
-            if(file != null)
-            {
+            if(file != null) {
             	readWriteService.write(file.getPath(), contents);
+            } else {
+            	LOGGER.warn("Saving was cancelled.");
             }
         } else {
             readWriteService.write(lastFileRead, contents);
