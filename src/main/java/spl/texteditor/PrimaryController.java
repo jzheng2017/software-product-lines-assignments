@@ -41,7 +41,10 @@ public  class  PrimaryController {
     public void onOpenFileAction() {
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
-        textArea.setText(readWriteService.read(file.getPath()));
+        if(file != null)
+        {
+        	textArea.setText(readWriteService.read(file.getPath()));
+        }
     }
 
 	
@@ -55,7 +58,10 @@ public  class  PrimaryController {
         if (isNewFile) {
             Dialog<File> fileDialog = new SaveFileDialog(stage);
             File file = fileDialog.openAndWait(Map.of());
-            readWriteService.write(file.getPath(), contents);
+            if(file != null)
+            {
+            	readWriteService.write(file.getPath(), contents);
+            }
         } else {
             readWriteService.write(lastFileRead, contents);
         }
