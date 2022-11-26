@@ -24,4 +24,6 @@ public interface ReadWriteService {
     String lastFileRead();
 
     String lastFileWritten();
+    
+    String lastFileTouched();
 }

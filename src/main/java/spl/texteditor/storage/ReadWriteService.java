@@ -32,5 +32,9 @@ public  interface  ReadWriteService {
 
     String lastFileWritten();
 
+	
+    
+    String lastFileTouched();
+
 
 }

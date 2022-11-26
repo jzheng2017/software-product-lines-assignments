@@ -2,6 +2,7 @@ package spl.texteditor;
 
 import java.io.File; 
 import java.util.Map; 
+
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory; 
 
@@ -18,6 +19,8 @@ import spl.texteditor.dialogs.SaveFileDialog;
 import spl.texteditor.dialogs.OpenFileDialog; 
 import spl.texteditor.storage.LocalFileSystemReadWriteService; 
 import spl.texteditor.storage.ReadWriteService; 
+
+import java.util.Objects; 
 import spl.texteditor.tasks.*; 
 
 public   class  PrimaryController {
@@ -41,6 +44,7 @@ public   class  PrimaryController {
     public void onOpenFileAction() {
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
+        
         if(file != null) {
         	textArea.setText(readWriteService.read(file.getPath()));
         } else {
@@ -77,7 +81,6 @@ public   class  PrimaryController {
     }
 
 	
-
     private TaskExecutorService taskExecutorService = new ScheduledExecutorTaskService();
 
 	
@@ -86,10 +89,17 @@ public   class  PrimaryController {
     void initialize() {
         taskExecutorService.executeTask(new ScheduledTask(
                 new AutosavingTask(readWriteService, new ContentProvider() {
-
+                	private String lastRequestedText;
                     @Override
                     public String getText() {
+                    	lastRequestedText = textArea.getText();
+                    	
                         return textArea.getText();
+                    }
+                    
+                    @Override
+                    public boolean isDirty() {
+                    	return !Objects.equals(lastRequestedText, textArea.getText());
                     }
                 }),
                 5,

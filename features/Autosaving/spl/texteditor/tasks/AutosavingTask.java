@@ -17,8 +17,8 @@ public class AutosavingTask implements Runnable {
 
     @Override
     public void run() {
-        final String identifier = readWriteService.lastFileRead();
-        if (identifier != null) {
+        final String identifier = readWriteService.lastFileTouched();
+        if (identifier != null && contentProvider.isDirty()) {
             readWriteService.write(identifier, contentProvider.getText());
             LOGGER.info("Autosaved..");
         }

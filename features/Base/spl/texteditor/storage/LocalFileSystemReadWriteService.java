@@ -11,11 +11,14 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
     private TextStorageService storageService = new FileTextStorageService();
     private String lastFileRead;
     private String lastFileWritten;
-
+    private String lastFileTouched;
+    
     @Override
     public String read(String identifier) {
         this.lastFileRead = identifier;
+        this.lastFileTouched = identifier;
         FileInputStream fileInputStream = null;
+        
         try {
             LOGGER.info("Reading file '{}'", identifier);
             fileInputStream = (FileInputStream) storageService.retrieve(identifier);
@@ -37,7 +40,9 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
 
     @Override
     public void write(String identifier, String content) {
-        this.lastFileRead = identifier;
+        this.lastFileWritten = identifier;
+        this.lastFileTouched = identifier;
+
         LOGGER.info("Start writing to file '{}'", identifier);
         storageService.store(identifier, content, true);
     }
@@ -50,5 +55,10 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
     @Override
     public String lastFileWritten() {
         return lastFileWritten;
+    }
+    
+    @Override
+    public String lastFileTouched() {
+    	return lastFileTouched;
     }
 }

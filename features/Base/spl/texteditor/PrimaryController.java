@@ -32,6 +32,7 @@ public class PrimaryController {
     public void onOpenFileAction() {
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
+        
         if(file != null) {
         	textArea.setText(readWriteService.read(file.getPath()));
         } else {
