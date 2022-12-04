@@ -19,12 +19,12 @@ public class PrimaryController {
     @FXML
     private Stage stage;
     private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
-    private TaskExecutorService taskExecutorService = new ScheduledExecutorTaskService();
-
+    private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
+ 
     @FXML
     void initialize() {
         taskExecutorService.executeTask(new ScheduledTask(
-                new AutosavingTask(readWriteService, new ContentProvider() {
+                new AutosaveTask(readWriteService, new ContentProvider() {
                 	private String lastRequestedText;
                     @Override
                     public String getText() {

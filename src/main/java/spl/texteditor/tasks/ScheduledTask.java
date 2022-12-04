@@ -1,6 +1,8 @@
 package spl.texteditor.tasks; 
 
-public  class  ScheduledTask  extends Task {
+import java.util.concurrent.Callable; 
+
+public  class  ScheduledTask <T>  extends Task<T> {
 	
     private final int period;
 
@@ -9,7 +11,7 @@ public  class  ScheduledTask  extends Task {
 
 	
 
-    public ScheduledTask(Runnable task, int period, boolean recurring) {
+    public ScheduledTask(Callable<T> task, int period, boolean recurring) {
         super(task);
 
         if (period != 0 && !recurring) {

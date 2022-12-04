@@ -1,18 +1,20 @@
 package spl.texteditor.tasks; 
 
-public abstract  class  Task {
+import java.util.concurrent.Callable; 
+
+public abstract  class  Task <T> {
 	
-    private Runnable task;
+    private Callable<T> task;
 
 	
 
-    public Task(Runnable task) {
+    public Task(Callable<T> task) {
         this.task = task;
     }
 
 	
 
-    public Runnable getTask() {
+    public Callable<T> getTask() {
         return task;
     }
 

@@ -1,17 +1,22 @@
-package spl.texteditor.tasks;
+package spl.texteditor.tasks; 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.Logger; 
+import org.slf4j.LoggerFactory; 
 
-import java.util.concurrent.*;
+import java.util.concurrent.*; 
 
 /**
  * A service that allows you to schedule the execution of tasks
  */
-public class ScheduledExecutorTaskService implements TaskExecutorService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledExecutorTaskService.class);
+public  class  ScheduledTaskExecutorService  implements TaskExecutorService {
+	
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTaskExecutorService.class);
+
+	
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+	
 
     @Override
     public Future<?> executeTask(Task task) {
@@ -20,7 +25,7 @@ public class ScheduledExecutorTaskService implements TaskExecutorService {
 
             if (scheduledTask.isRecurring()) {
                 LOGGER.info("Scheduling recurring task with period of {} seconds", scheduledTask.getPeriod());
-                return executorService.scheduleAtFixedRate(scheduledTask.getTask(), 0L, scheduledTask.getPeriod(), TimeUnit.SECONDS);
+                return executorService.schedule(scheduledTask.getTask(), scheduledTask.getPeriod(), TimeUnit.SECONDS);
             } else {
                 LOGGER.info("Scheduling non-recurring task");
                 return executorService.schedule(scheduledTask.getTask(), 0L, TimeUnit.SECONDS);
@@ -29,4 +34,6 @@ public class ScheduledExecutorTaskService implements TaskExecutorService {
             throw new IllegalArgumentException("Provided task is not a scheduled task");
         }
     }
+
+
 }

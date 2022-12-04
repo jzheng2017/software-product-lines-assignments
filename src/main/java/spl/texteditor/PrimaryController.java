@@ -2,11 +2,11 @@ package spl.texteditor;
 
 import java.io.File; 
 import java.util.Map; 
-
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory; 
 
 import javafx.fxml.FXML; 
+
 import javafx.scene.control.TextArea; 
 import javafx.scene.input.KeyCode; 
 import javafx.scene.input.KeyCodeCombination; 
@@ -22,6 +22,8 @@ import spl.texteditor.dialogs.SaveFileDialog;
 import spl.texteditor.dialogs.OpenFileDialog; 
 import spl.texteditor.storage.LocalFileSystemReadWriteService; 
 import spl.texteditor.storage.ReadWriteService; 
+import spl.texteditor.tasks.ScheduledTaskExecutorService; 
+import spl.texteditor.tasks.TaskExecutorService; 
 
 import java.util.Objects; 
 import spl.texteditor.tasks.*; 
@@ -92,7 +94,6 @@ public   class  PrimaryController {
     }
 
 	
-    
     @FXML
     public void onDragOver(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
@@ -117,14 +118,14 @@ public   class  PrimaryController {
     }
 
 	
-    private TaskExecutorService taskExecutorService = new ScheduledExecutorTaskService();
+    private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
 
 	
-
+ 
     @FXML
     void initialize() {
         taskExecutorService.executeTask(new ScheduledTask(
-                new AutosavingTask(readWriteService, new ContentProvider() {
+                new AutosaveTask(readWriteService, new ContentProvider() {
                 	private String lastRequestedText;
                     @Override
                     public String getText() {
