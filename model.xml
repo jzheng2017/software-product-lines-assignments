@@ -15,6 +15,7 @@
 			<feature mandatory="true" name="Base"/>
 			<feature name="FindAndReplace"/>
 			<feature name="Autosaving"/>
+			<feature name="FileDragAndDrop"/>
 		</and>
 	</struct>
 </featureModel>

@@ -2,6 +2,7 @@
 <configuration>
 	<feature automatic="selected" name="texteditor"/>
 	<feature automatic="selected" name="Base"/>
-	<feature name="FindAndReplace"/>
+	<feature manual="selected" name="FindAndReplace"/>
 	<feature manual="selected" name="Autosaving"/>
+	<feature manual="selected" name="FileDragAndDrop"/>
 </configuration>

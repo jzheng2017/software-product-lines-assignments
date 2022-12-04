@@ -12,6 +12,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.stage.Stage;
 import spl.texteditor.dialogs.*;
 import spl.texteditor.dialogs.Dialog;
@@ -62,5 +65,15 @@ public class PrimaryController {
     @FXML
     public void onKeyPressed(KeyEvent event) {
     	
+    }
+    
+    @FXML
+    public void onDragOver(DragEvent event) {
+
+    }
+    
+    @FXML
+    public void onDragDropped(DragEvent event) {
+
     }
 }

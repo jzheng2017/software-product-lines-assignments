@@ -12,6 +12,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination; 
 import javafx.scene.input.KeyCombination; 
 import javafx.scene.input.KeyEvent; 
+import javafx.scene.input.DragEvent; 
+import javafx.scene.input.Dragboard; 
+import javafx.scene.input.TransferMode; 
 import javafx.stage.Stage; 
 import spl.texteditor.dialogs.*; 
 import spl.texteditor.dialogs.Dialog; 
@@ -74,10 +77,43 @@ public   class  PrimaryController {
     }
 
 	
-    
+
     @FXML
     public void onKeyPressed(KeyEvent event) {
-    	
+        KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+        if (ctrlAndF.match(event)) {
+            Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
+            final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
+
+            if (result.isValid()) {
+                textArea.setText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+            }
+        }
+    }
+
+	
+    
+    @FXML
+    public void onDragOver(DragEvent event) {
+        if (event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.COPY);
+        }
+        event.consume();
+    }
+
+	
+    
+    @FXML
+    public void onDragDropped(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (db.hasFiles()) {
+        	File file = db.getFiles().get(0);
+        	textArea.setText(readWriteService.read(file.getPath()));
+            success = true;
+        }
+        event.setDropCompleted(success);
+        event.consume();
     }
 
 	
