@@ -2,11 +2,11 @@ package spl.texteditor;
 
 import java.io.File; 
 import java.util.Map; 
+
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory; 
 
 import javafx.fxml.FXML; 
-
 import javafx.scene.control.TextArea; 
 import javafx.scene.input.KeyCode; 
 import javafx.scene.input.KeyCodeCombination; 
@@ -25,12 +25,9 @@ import spl.texteditor.storage.ReadWriteService;
 import spl.texteditor.tasks.ScheduledTaskExecutorService; 
 import spl.texteditor.tasks.TaskExecutorService; 
 
-import java.util.Objects; 
-import spl.texteditor.tasks.*; 
-
-public   class  PrimaryController {
+public  class  PrimaryController {
 	
-    private static final Logger LOGGER  = LoggerFactory.getLogger(PrimaryController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryController.class);
 
 	
     @FXML
@@ -41,7 +38,7 @@ public   class  PrimaryController {
     private Stage stage;
 
 	
-    private ReadWriteService readWriteService  = new LocalFileSystemReadWriteService();
+    private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
 
 	
 
@@ -79,69 +76,24 @@ public   class  PrimaryController {
     }
 
 	
-
+    
     @FXML
     public void onKeyPressed(KeyEvent event) {
-        KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
-        if (ctrlAndF.match(event)) {
-            Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
-            final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
-
-            if (result.isValid()) {
-                textArea.setText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
-            }
-        }
+    	
     }
 
 	
+    
     @FXML
     public void onDragOver(DragEvent event) {
-        if (event.getDragboard().hasFiles()) {
-            event.acceptTransferModes(TransferMode.COPY);
-        }
-        event.consume();
+
     }
 
 	
     
     @FXML
     public void onDragDropped(DragEvent event) {
-        Dragboard db = event.getDragboard();
-        boolean success = false;
-        if (db.hasFiles()) {
-        	File file = db.getFiles().get(0);
-        	textArea.setText(readWriteService.read(file.getPath()));
-            success = true;
-        }
-        event.setDropCompleted(success);
-        event.consume();
-    }
 
-	
-    private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
-
-	
- 
-    @FXML
-    void initialize() {
-        taskExecutorService.executeTask(new ScheduledTask(
-                new AutosaveTask(readWriteService, new ContentProvider() {
-                	private String lastRequestedText;
-                    @Override
-                    public String getText() {
-                    	lastRequestedText = textArea.getText();
-                    	
-                        return textArea.getText();
-                    }
-                    
-                    @Override
-                    public boolean isDirty() {
-                    	return !Objects.equals(lastRequestedText, textArea.getText());
-                    }
-                }),
-                5,
-                true
-        ));
     }
 
 

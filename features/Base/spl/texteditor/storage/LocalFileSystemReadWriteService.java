@@ -21,6 +21,15 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
     private String lastFileTouched;
     private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
 
+    public LocalFileSystemReadWriteService() {
+
+    }
+
+    //only for unit testing purposes
+    LocalFileSystemReadWriteService(TextStorageService textStorageService) {
+        this.storageService = textStorageService;
+    }
+
     @Override
     public String read(String identifier) {
         this.lastFileRead = identifier;
