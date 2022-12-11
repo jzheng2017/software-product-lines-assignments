@@ -4,13 +4,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import org.fxmisc.richtext.CodeArea?>
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spl.texteditor.PrimaryController">
    <children>
-      <MenuBar VBox.vgrow="NEVER">
+      <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
@@ -46,8 +46,14 @@
       </MenuBar>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextArea fx:id="textArea" layoutX="6.0" onDragOver="#onDragOver" onDragDropped="#onDragDropped" onKeyPressed="#onKeyPressed" prefHeight="373.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <CodeArea xmlns:fx="http://javafx.com/fxml/1"
+                      fx:id="textArea" layoutX="6.0"
+                      prefHeight="373.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                      editable="true" wrapText="true" autoScrollOnDragDesired="true"
+                      contextMenuXOffset="12.0" contextMenuYOffset="34.0" >
+            </CodeArea>
          </children>
       </AnchorPane>
    </children>
 </VBox>
+

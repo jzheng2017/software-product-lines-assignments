@@ -3,35 +3,35 @@ package spl.texteditor;
 import java.io.File; 
 import java.util.Map; 
 
+import javafx.scene.control.MenuBar; 
+import org.fxmisc.richtext.CodeArea; 
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory; 
 
 import javafx.fxml.FXML; 
-import javafx.scene.control.TextArea; 
-import javafx.scene.input.KeyCode; 
-import javafx.scene.input.KeyCodeCombination; 
-import javafx.scene.input.KeyCombination; 
 import javafx.scene.input.KeyEvent; 
 import javafx.scene.input.DragEvent; 
-import javafx.scene.input.Dragboard; 
-import javafx.scene.input.TransferMode; 
 import javafx.stage.Stage; 
-import spl.texteditor.dialogs.*; 
 import spl.texteditor.dialogs.Dialog; 
 import spl.texteditor.dialogs.SaveFileDialog; 
 import spl.texteditor.dialogs.OpenFileDialog; 
 import spl.texteditor.storage.LocalFileSystemReadWriteService; 
 import spl.texteditor.storage.ReadWriteService; 
-import spl.texteditor.tasks.ScheduledTaskExecutorService; 
-import spl.texteditor.tasks.TaskExecutorService; 
+import spl.texteditor.plugin.core.PluginManager; 
+import spl.texteditor.plugin.core.pf4j.Pf4JPluginManager; 
+import spl.texteditor.plugin.core.pf4j.TextAreaExtensionPointProcessor; 
 
-public  class  PrimaryController {
+public   class  PrimaryController {
 	
-    private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryController.class);
+    private static final Logger LOGGER  = LoggerFactory.getLogger(PrimaryController.class);
 
 	
     @FXML
-    private TextArea textArea;
+    private CodeArea textArea;
+
+	
+    @FXML
+    private MenuBar menuBar;
 
 	
     @FXML
@@ -44,11 +44,12 @@ public  class  PrimaryController {
 
     @FXML
     public void onOpenFileAction() {
+        System.out.println(menuBar);
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
         
         if(file != null) {
-        	textArea.setText(readWriteService.read(file.getPath()));
+        	textArea.replaceText(readWriteService.read(file.getPath()));
         } else {
         	LOGGER.warn("No file was selected.");
         }
@@ -94,6 +95,18 @@ public  class  PrimaryController {
     @FXML
     public void onDragDropped(DragEvent event) {
 
+    }
+
+	
+    private PluginManager pluginManager = Pf4JPluginManager.getInstance();
+
+	
+
+    @FXML
+    public void initialize() {
+        LOGGER.info("Initialization started");
+        Pf4JPluginManager pf4JPluginManager = (Pf4JPluginManager)pluginManager;
+        pluginManager.addObserver(new TextAreaExtensionPointProcessor(pf4JPluginManager.getInternalPluginManager(), textArea));
     }
 
 

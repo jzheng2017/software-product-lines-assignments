@@ -5,24 +5,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent; 
 import javafx.scene.Scene; 
 import javafx.stage.Stage; 
+import org.slf4j.Logger; 
 
 import java.io.IOException; 
+import spl.texteditor.plugin.core.PluginSystemBootstrapper; 
 
-/**
- * JavaFX App
- */
-public  class  App  extends Application {
+public   class  App  extends Application {
 	
 
     private static Scene scene;
 
 	
 
-    @Override
-    public void start(Stage stage) throws IOException {
+    
+     private void  start__wrappee__Base(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
         stage.show();
+    }
+
+	
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        start__wrappee__Base(primaryStage);
+        pluginSystemBootstrapper.start();
     }
 
 	
@@ -41,8 +48,12 @@ public  class  App  extends Application {
 	
 
     public static void main(String[] args) {
+        System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
         launch();
     }
+
+	
+    private PluginSystemBootstrapper pluginSystemBootstrapper = new PluginSystemBootstrapper();
 
 
 }

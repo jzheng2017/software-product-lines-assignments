@@ -5,11 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX spl.texteditor.App
  */
 public class App extends Application {
 
@@ -32,6 +33,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
         launch();
     }
 

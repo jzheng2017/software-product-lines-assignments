@@ -1,6 +1,6 @@
-package spl.texteditor.storage;
+package spl.texteditor.storage; 
 
-import java.util.concurrent.Future;
+import java.util.concurrent.Future; 
 
 /**
  * A service allowing you to read and write from/to a source
@@ -23,8 +23,6 @@ public  interface  ReadWriteService {
      *
      * @param identifier a string that uniquely identifies the source
      * @param content    the text you want to write to the source
-     *
-     * @return a future representing the write operation as it's asynchronous
      */
     Future<?> write(String identifier, String content);
 

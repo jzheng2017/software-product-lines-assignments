@@ -8,10 +8,7 @@ import spl.texteditor.tasks.TaskExecutorService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 public class LocalFileSystemReadWriteService implements ReadWriteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileSystemReadWriteService.class);
@@ -44,12 +41,12 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
     }
 
     @Override
-    public void write(String identifier, String content) {
+    public Future<?> write(String identifier, String content) {
         this.lastFileWritten = identifier;
         this.lastFileTouched = identifier;
 
         LOGGER.info("Start writing to file '{}'", identifier);
-        taskExecutorService.executeTask(new ScheduledTask(
+        return taskExecutorService.executeTask(new ScheduledTask(
                 new WriteFileTask(identifier, content),
                 0,
                 false));

@@ -1,12 +1,8 @@
 package spl.texteditor.storage;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import spl.texteditor.tasks.ScheduledTaskExecutorService;
-import spl.texteditor.tasks.TaskExecutorService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
