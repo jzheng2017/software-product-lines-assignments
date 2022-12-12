@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: 17.0.5 (Private Build)
+Plugin-Id: java-syntax-highlighting-plugin
+Plugin-Version: 0.0.1

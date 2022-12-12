@@ -108,9 +108,6 @@ public class JavaSyntaxHighlightingPlugin extends Plugin {
                 }
             });
 
-
-//            textArea.replaceText(0, 0, te);
-
             textArea.getStylesheets().add("java-keywords.css");
         }
 

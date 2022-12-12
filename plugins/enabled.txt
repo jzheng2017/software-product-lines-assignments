@@ -1,0 +1,2 @@
+java-syntax-highlighting-plugin
+test-plugin
