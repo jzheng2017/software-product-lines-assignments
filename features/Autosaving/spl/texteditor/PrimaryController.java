@@ -23,6 +23,7 @@ public class PrimaryController {
  
     @FXML
     void initialize() {
+        original();
         taskExecutorService.executeTask(new ScheduledTask(
                 new AutosaveTask(readWriteService, new ContentProvider() {
                 	private String lastRequestedText;

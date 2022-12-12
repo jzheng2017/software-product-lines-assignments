@@ -21,6 +21,17 @@ import spl.texteditor.plugin.core.PluginManager;
 import spl.texteditor.plugin.core.pf4j.Pf4JPluginManager; 
 import spl.texteditor.plugin.core.pf4j.TextAreaExtensionPointProcessor; 
 
+import javafx.scene.control.TextArea; 
+import javafx.scene.input.KeyCode; 
+import javafx.scene.input.KeyCodeCombination; 
+import javafx.scene.input.KeyCombination; 
+import spl.texteditor.dialogs.*; 
+
+import java.util.Objects; 
+import spl.texteditor.tasks.*; 
+import javafx.scene.input.Dragboard; 
+import javafx.scene.input.TransferMode; 
+
 public   class  PrimaryController {
 	
     private static final Logger LOGGER  = LoggerFactory.getLogger(PrimaryController.class);
@@ -38,7 +49,7 @@ public   class  PrimaryController {
     private Stage stage;
 
 	
-    private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
+    private ReadWriteService readWriteService  = new LocalFileSystemReadWriteService();
 
 	
 
@@ -77,24 +88,42 @@ public   class  PrimaryController {
     }
 
 	
-    
+
     @FXML
     public void onKeyPressed(KeyEvent event) {
-    	
+        KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
+        if (ctrlAndF.match(event)) {
+            Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
+            final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
+
+            if (result.isValid()) {
+                textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+            }
+        }
     }
 
 	
-    
     @FXML
     public void onDragOver(DragEvent event) {
-
+        if (event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.COPY);
+        }
+        event.consume();
     }
 
 	
     
     @FXML
     public void onDragDropped(DragEvent event) {
-
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (db.hasFiles()) {
+        	File file = db.getFiles().get(0);
+        	textArea.replaceText(readWriteService.read(file.getPath()));
+            success = true;
+        }
+        event.setDropCompleted(success);
+        event.consume();
     }
 
 	
@@ -103,11 +132,39 @@ public   class  PrimaryController {
 	
 
     @FXML
-    public void initialize() {
+     private void  initialize__wrappee__PluginSystem() {
         LOGGER.info("Initialization started");
         Pf4JPluginManager pf4JPluginManager = (Pf4JPluginManager)pluginManager;
         pluginManager.addObserver(new TextAreaExtensionPointProcessor(pf4JPluginManager.getInternalPluginManager(), textArea));
     }
+
+	
+ 
+    @FXML
+    void initialize() {
+        initialize__wrappee__PluginSystem();
+        taskExecutorService.executeTask(new ScheduledTask(
+                new AutosaveTask(readWriteService, new ContentProvider() {
+                	private String lastRequestedText;
+                    @Override
+                    public String getText() {
+                    	lastRequestedText = textArea.getText();
+                    	
+                        return textArea.getText();
+                    }
+                    
+                    @Override
+                    public boolean isDirty() {
+                    	return !Objects.equals(lastRequestedText, textArea.getText());
+                    }
+                }),
+                5,
+                true
+        ));
+    }
+
+	
+    private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
 
 
 }

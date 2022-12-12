@@ -30,7 +30,7 @@ public class PrimaryController {
             final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
 
             if (result.isValid()) {
-                textArea.setText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+                textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
             }
         }
     }
