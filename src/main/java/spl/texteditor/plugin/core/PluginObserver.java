@@ -1,13 +1,13 @@
-package spl.texteditor.plugin.core; 
+package spl.texteditor.plugin.core;
 
-public  interface  PluginObserver {
-	
+
+public interface PluginObserver {
+
     String getName();
 
-	
+
     void onPluginAdded(Plugin plugin);
 
-	
 
     void onPluginRemoved(Plugin plugin);
 
