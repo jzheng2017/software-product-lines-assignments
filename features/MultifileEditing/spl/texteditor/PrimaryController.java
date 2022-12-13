@@ -59,7 +59,6 @@ public class PrimaryController {
         	    new ChangeListener<Tab>() {
         	        @Override
         	        public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-        	            System.out.println("Tab Selection changed");
         	            // Set textArea to current tab area
         	            textArea = (CodeArea) tabpane.getSelectionModel().getSelectedItem().getContent();
         	        }
@@ -82,13 +81,17 @@ public class PrimaryController {
             File file = fileDialog.openAndWait(Map.of());
             CodeArea textArea = new CodeArea();
             
+            ReadWriteService service = new LocalFileSystemReadWriteService();
+            services.add(service);
+            
             if(file != null) {
-            	textArea.replaceText(readWriteService.read(file.getPath()));
+            	textArea.replaceText(service.read(file.getPath()));
             } else {
             	LOGGER.warn("No file was selected.");
             }
             Tab tab = new Tab(file.getName(), textArea);
             tabpane.getTabs().add(tab);
+            
         }
     };
     
@@ -97,8 +100,14 @@ public class PrimaryController {
         System.out.println(menuBar);
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
+        int index = tabpane.getSelectionModel().getSelectedIndex();
+        // Remove the current service if it exists
+        if(services.size() >= index + 1)
+        {
+        	services.remove(index);
+        }
         ReadWriteService service = new LocalFileSystemReadWriteService();
-        services.add(service);
+        services.add(tabpane.getSelectionModel().getSelectedIndex(),service);
         
         if(file != null) {
         	tabpane.getSelectionModel().getSelectedItem().setText(file.getName());
