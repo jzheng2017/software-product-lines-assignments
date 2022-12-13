@@ -15,8 +15,6 @@ import spl.texteditor.tasks.*;
 public class PrimaryController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryController.class);
     @FXML
-    private TextArea textArea;
-    @FXML
     private Stage stage;
     private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
     private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();

@@ -1,5 +1,8 @@
 package spl.texteditor;
 
+import spl.texteditor.dialogs.FindAndReplaceDialog;
+import spl.texteditor.dialogs.FindAndReplaceResult;
+
 import java.io.File;
 import java.util.Map;
 
@@ -24,13 +27,14 @@ public class PrimaryController {
 
     @FXML
     public void onKeyPressed(KeyEvent event) {
+    	original(event);
         KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
         if (ctrlAndF.match(event)) {
             Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
             final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
 
             if (result.isValid()) {
-                textArea.setText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+                textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
             }
         }
     }

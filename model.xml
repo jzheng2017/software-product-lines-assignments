@@ -17,6 +17,7 @@
 			<feature name="FindAndReplace"/>
 			<feature name="Autosaving"/>
 			<feature name="FileDragAndDrop"/>
+			<feature name="MultifileEditing"/>
 			<and abstract="true" name="SyntaxHighlighting">
 				<graphics key="collapsed" value="false"/>
 				<feature name="JavaSyntaxHighlighting"/>

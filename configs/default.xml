@@ -6,7 +6,8 @@
 	<feature name="FindAndReplace"/>
 	<feature name="Autosaving"/>
 	<feature name="FileDragAndDrop"/>
-	<feature automatic="selected" name="SyntaxHighlighting"/>
-	<feature manual="selected" name="JavaSyntaxHighlighting"/>
+	<feature name="MultifileEditing"/>
+	<feature name="SyntaxHighlighting"/>
+	<feature name="JavaSyntaxHighlighting"/>
 	<feature name="PythonSyntaxHighlighting"/>
 </configuration>

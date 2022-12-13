@@ -17,7 +17,6 @@ public class AutosaveTask implements Callable<Void> {
         this.contentProvider = contentProvider;
     }
 
-
     @Override
     public Void call() throws Exception {
         final String identifier = readWriteService.lastFileTouched();

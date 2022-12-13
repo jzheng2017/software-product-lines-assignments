@@ -20,6 +20,7 @@ public   class  App  extends Application {
     
      private void  start__wrappee__Base(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"), 640, 480);
+        stage.setTitle("Text Editor");
         stage.setScene(scene);
         stage.show();
     }

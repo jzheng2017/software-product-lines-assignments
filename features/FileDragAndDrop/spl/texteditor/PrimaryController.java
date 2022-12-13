@@ -17,8 +17,6 @@ import spl.texteditor.storage.ReadWriteService;
 public class PrimaryController {
     private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
     @FXML
-    private TextArea textArea;
-    @FXML
     public void onDragOver(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY);
@@ -32,7 +30,7 @@ public class PrimaryController {
         boolean success = false;
         if (db.hasFiles()) {
         	File file = db.getFiles().get(0);
-        	textArea.setText(readWriteService.read(file.getPath()));
+        	textArea.replaceText(readWriteService.read(file.getPath()));
             success = true;
         }
         event.setDropCompleted(success);
