@@ -9,6 +9,9 @@ import java.nio.file.Path;
 import java.util.*; 
 import java.util.concurrent.Callable; 
 
+/**
+ * A task that discovers jars (-> plugins) which then are dispatched to be loaded in the plugin system.
+ */
 public  class  DiscoverAndLoadPluginTask  implements Callable<List<String>> {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverAndLoadPluginTask.class);
@@ -50,7 +53,7 @@ public  class  DiscoverAndLoadPluginTask  implements Callable<List<String>> {
         } else {
             LOGGER.info("Loaded {} new plugins.", loadedPlugins.size());
         }
-        
+
         return loadedPlugins;
     }
 

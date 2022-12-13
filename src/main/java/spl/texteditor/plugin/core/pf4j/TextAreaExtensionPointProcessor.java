@@ -9,6 +9,9 @@ import spl.texteditor.plugin.core.Plugin;
 import spl.texteditor.plugin.core.PluginObserver; 
 import spl.texteditor.plugin.core.pf4j.extensionpoints.TextAreaExtensionPoint; 
 
+/**
+ * A class that processes all {@link TextAreaExtensionPoint} which are discovered in the system
+ */
 public  class  TextAreaExtensionPointProcessor  implements PluginObserver {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(TextAreaExtensionPointProcessor.class);
@@ -20,12 +23,14 @@ public  class  TextAreaExtensionPointProcessor  implements PluginObserver {
     private CodeArea textArea;
 
 	
+
     public TextAreaExtensionPointProcessor(PluginManager pluginManager, CodeArea textArea) {
         this.pluginManager = pluginManager;
         this.textArea = textArea;
     }
 
 	
+
     @Override
     public void onPluginAdded(Plugin plugin) {
         LOGGER.info("New plugin added '{}'", plugin.getName());

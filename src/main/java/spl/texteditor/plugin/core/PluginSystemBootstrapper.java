@@ -6,7 +6,9 @@ import spl.texteditor.plugin.core.pf4j.Pf4JPluginManager;
 import spl.texteditor.tasks.ScheduledTask; 
 import spl.texteditor.tasks.ScheduledTaskExecutorService; 
 import spl.texteditor.tasks.TaskExecutorService; 
-
+/**
+ * This class allows you to bootstrap the plugin system
+ */
 public  class  PluginSystemBootstrapper {
 	
     private Logger LOGGER = LoggerFactory.getLogger(PluginSystemBootstrapper.class);
