@@ -1,16 +1,23 @@
 package spl.texteditor.dialogs;
 
-public class FindAndReplaceResult {
+public class FindResult {
     private String textToFind;
     private String replacementText;
+    private boolean caseSensitive;
 
-    public FindAndReplaceResult(String textToFind, String replacementText) {
+    public FindResult(String textToFind, String replacementText, boolean caseSensitive) {
         this.textToFind = textToFind;
         this.replacementText = replacementText;
+        this.caseSensitive = caseSensitive;
+        
     }
 
     public String getTextToFind() {
         return textToFind;
+    }
+    
+    public boolean getCaseSensitive() {
+        return caseSensitive;
     }
 
     public String getReplacementText() {

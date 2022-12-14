@@ -1,8 +1,5 @@
 package spl.texteditor;
 
-import spl.texteditor.dialogs.FindAndReplaceDialog;
-import spl.texteditor.dialogs.FindAndReplaceResult;
-
 import java.io.File;
 import java.util.Map;
 
@@ -17,9 +14,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import spl.texteditor.dialogs.*;
-import spl.texteditor.dialogs.Dialog;
-import spl.texteditor.dialogs.SaveFileDialog;
-import spl.texteditor.dialogs.OpenFileDialog;
 import spl.texteditor.storage.LocalFileSystemReadWriteService;
 import spl.texteditor.storage.ReadWriteService;
 
@@ -27,14 +21,18 @@ public class PrimaryController {
 
     @FXML
     public void onKeyPressed(KeyEvent event) {
-    	original(event);
+    	
         KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
         if (ctrlAndF.match(event)) {
-            Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
-            final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
-
+            Dialog<FindResult> findDialog = new FindDialog();
+            final FindResult result = findDialog.openAndWait(Map.of());
             if (result.isValid()) {
-                textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+            	if(result.getCaseSensitive()) {
+            		textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+            	}
+            	else {
+            		textArea.replaceText(textArea.getText().replaceAll("(?i)"+result.getTextToFind(), result.getReplacementText()));
+            	}
             }
         }
     }

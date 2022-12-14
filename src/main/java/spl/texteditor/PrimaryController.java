@@ -30,8 +30,8 @@ import spl.texteditor.plugin.core.PluginManager;
 import spl.texteditor.plugin.core.pf4j.Pf4JPluginManager; 
 import spl.texteditor.plugin.core.pf4j.TextAreaExtensionPointProcessor; 
 
-import spl.texteditor.dialogs.FindAndReplaceDialog; 
-import spl.texteditor.dialogs.FindAndReplaceResult; 
+import java.awt.Color; 
+import java.util.Collections; 
 
 import javafx.scene.control.TextArea; 
 import spl.texteditor.dialogs.*; 
@@ -120,32 +120,28 @@ public   class  PrimaryController {
     }
 
 	
-    
-    @FXML
-     private void  onKeyPressed__wrappee__Base(KeyEvent event) {
-        KeyCombination ctrlAndO = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN);
-        if (ctrlAndO.match(event)) {
-            this.onOpenFileAction();
-        }
-        
-        KeyCombination ctrlAndS = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
-        if (ctrlAndS.match(event)) {
-        	this.onFileSave();
-        }
-    }
-
 	
 
     @FXML
     public void onKeyPressed(KeyEvent event) {
-    	onKeyPressed__wrappee__Base(event);
+    	
         KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
         if (ctrlAndF.match(event)) {
-            Dialog<FindAndReplaceResult> findAndReplaceDialog = new FindAndReplaceDialog();
-            final FindAndReplaceResult result = findAndReplaceDialog.openAndWait(Map.of());
-
+            Dialog<FindResult> findDialog = new FindDialog();
+            final FindResult result = findDialog.openAndWait(Map.of());
             if (result.isValid()) {
-                textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
+            	String allText = textArea.getText();
+            	String ttf = result.getTextToFind();
+            	if(!result.getCaseSensitive()) {
+            		allText = allText.toLowerCase();
+            		ttf = ttf.toLowerCase();
+            	}
+            	int indexOfWord = allText.indexOf(ttf);
+            	while (indexOfWord >= 0) {
+            		LOGGER.info("Found word and highlighting it");
+            		textArea.setStyleClass(indexOfWord, indexOfWord+ttf.length(), "-fx-font-color: red;");
+            		indexOfWord = allText.indexOf(ttf, indexOfWord+ttf.length());
+        		}
             }
         }
     }

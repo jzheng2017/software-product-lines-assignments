@@ -14,7 +14,10 @@
 		<and abstract="true" mandatory="true" name="texteditor">
 			<feature mandatory="true" name="Base"/>
 			<feature mandatory="true" name="PluginSystem"/>
-			<feature name="FindAndReplace"/>
+			<and name="Find">
+				<graphics key="collapsed" value="false"/>
+				<feature name="Replace"/>
+			</and>
 			<feature name="Autosaving"/>
 			<feature name="FileDragAndDrop"/>
 			<feature name="MultifileEditing"/>

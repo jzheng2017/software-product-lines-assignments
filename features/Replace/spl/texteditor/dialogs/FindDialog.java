@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -13,25 +14,25 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class FindAndReplaceDialog implements Dialog<FindAndReplaceResult> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FindAndReplaceDialog.class);
+public class FindDialog implements Dialog<FindResult> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FindDialog.class);
 
     @Override
-    public FindAndReplaceResult openAndWait(Map<String, String> args) {
+    public FindResult openAndWait(Map<String, String> args) {
         LOGGER.info("Find and replace dialog opened");
-        javafx.scene.control.Dialog findAndReplaceDialog = new javafx.scene.control.Dialog();
-        configureLabels(args, findAndReplaceDialog);
-        configureControls(findAndReplaceDialog);
+        javafx.scene.control.Dialog findDialog = new javafx.scene.control.Dialog();
+        configureLabels(args, findDialog);
+        configureControls(findDialog);
 
-        return (FindAndReplaceResult) findAndReplaceDialog
+        return (FindResult) findDialog
                 .showAndWait()
-                .orElse(new FindAndReplaceResult("", ""));
+                .orElse(new FindResult("", "", false));
     }
 
-    private void configureControls(javafx.scene.control.Dialog<FindAndReplaceResult> findAndReplaceDialog) {
+    private void configureControls(javafx.scene.control.Dialog<FindResult> findDialog) {
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
 
-        findAndReplaceDialog
+        findDialog
                 .getDialogPane()
                 .getButtonTypes()
                 .addAll(okButtonType, ButtonType.CANCEL);
@@ -42,34 +43,36 @@ public class FindAndReplaceDialog implements Dialog<FindAndReplaceResult> {
         gridPane.setPadding(new Insets(20, 10, 10, 10));
 
         TextField findTextField = new TextField();
-        findTextField.setPromptText("Find");
         TextField replaceTextField = new TextField();
+        CheckBox caseSensitive = new CheckBox("Case sensitive");
+        findTextField.setPromptText("Find");
         replaceTextField.setPromptText("Replace");
         gridPane.add(findTextField, 0, 0);
+        gridPane.add(caseSensitive, 0, 2);
         gridPane.add(replaceTextField, 0, 1);
 
-        findAndReplaceDialog.getDialogPane().setContent(gridPane);
+        findDialog.getDialogPane().setContent(gridPane);
 
-        findAndReplaceDialog.setResultConverter(new Callback<ButtonType, FindAndReplaceResult>() {
+        findDialog.setResultConverter(new Callback<ButtonType, FindResult>() {
             @Override
-            public FindAndReplaceResult call(ButtonType buttonType) {
+            public FindResult call(ButtonType buttonType) {
                 boolean okButtonClicked = okButtonType == buttonType;
 
                 if (okButtonClicked) {
                     LOGGER.info("Find and replaceTextField dialog completed with: find {}, replace: {}", findTextField.getText(), replaceTextField.getText());
-                    return new FindAndReplaceResult(findTextField.getText(), replaceTextField.getText());
+                    return new FindResult(findTextField.getText(), replaceTextField.getText(), caseSensitive.isSelected());
                 }
 
                 LOGGER.info("Find and replaceTextField dialog cancelled");
-                return new FindAndReplaceResult("", "");
+                return new FindResult("", "", false);
             }
         });
     }
 
-    private void configureLabels(Map<String, String> args, javafx.scene.control.Dialog<FindAndReplaceResult> findAndReplaceDialog) {
+    private void configureLabels(Map<String, String> args, javafx.scene.control.Dialog<FindResult> findDialog) {
         String title = args.get("title");
         String content = args.get("content");
-        findAndReplaceDialog.setTitle(title != null ? title : "Find and replace");
-        findAndReplaceDialog.setContentText(content != null ? title : "Enter a text that you want to be replaced");
+        findDialog.setTitle(title != null ? title : "Find and replace");
+        findDialog.setContentText(content != null ? title : "Enter a text that you want to be replaced");
     }
 }
