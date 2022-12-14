@@ -3,11 +3,11 @@
 	<feature automatic="selected" name="texteditor"/>
 	<feature automatic="selected" name="Base"/>
 	<feature automatic="selected" name="PluginSystem"/>
-	<feature manual="selected" name="Find"/>
+	<feature name="Find"/>
 	<feature name="Replace"/>
 	<feature manual="selected" name="Autosaving"/>
-	<feature manual="selected" name="FileDragAndDrop"/>
-	<feature manual="selected" name="MultifileEditing"/>
+	<feature name="FileDragAndDrop"/>
+	<feature name="MultifileEditing"/>
 	<feature name="SyntaxHighlighting"/>
 	<feature name="JavaSyntaxHighlighting"/>
 	<feature name="PythonSyntaxHighlighting"/>

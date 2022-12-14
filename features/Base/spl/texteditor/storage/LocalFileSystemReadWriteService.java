@@ -33,7 +33,9 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
         this.lastFileTouched = identifier;
 
         try {
-            return (String)taskExecutorService.executeTask(new ScheduledTask(new ReadFileTask(identifier), 0, false)).get(5L, TimeUnit.SECONDS);
+            String s = (String)taskExecutorService.executeTask(new ScheduledTask(new ReadFileTask(identifier), 0, false)).get(5L, TimeUnit.SECONDS);
+            System.out.println(s);
+            return s;
         } catch (Exception e) {
             LOGGER.warn("Could not read contents of file '{}'", identifier);
             throw new RuntimeException(e);

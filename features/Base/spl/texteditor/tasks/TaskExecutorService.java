@@ -11,4 +11,11 @@ public interface TaskExecutorService {
      * @param task the task you want to be executed
      */
     Future<?> executeTask(Task task);
+
+    /**
+     * Execute a task that is recurring
+     * @param task
+     * @return
+     */
+    Future<?> executeRecurringTask(Task task);
 }

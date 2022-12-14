@@ -36,7 +36,7 @@ public  class  PluginSystemBootstrapper {
         }
 
         LOGGER.info("Plugin system starting up...");
-        scheduledTaskExecutorService.executeTask(new ScheduledTask(new DiscoverAndLoadPluginTask(pluginManager, "plugins"), 10, true));
+        scheduledTaskExecutorService.executeRecurringTask(new ScheduledTask(new DiscoverAndLoadPluginTask(pluginManager, "plugins"), 10, true));
         started = true;
         LOGGER.info("Plugin system successfully started!");
     }

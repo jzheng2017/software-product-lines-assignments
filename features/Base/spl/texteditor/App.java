@@ -34,7 +34,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
+//        System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
         launch();
     }
 

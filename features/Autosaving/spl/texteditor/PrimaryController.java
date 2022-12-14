@@ -2,9 +2,13 @@ package spl.texteditor;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +22,11 @@ public class PrimaryController {
     private Stage stage;
     private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
     private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
- 
+
     @FXML
     void initialize() {
         original();
-        taskExecutorService.executeTask(new ScheduledTask(
+        taskExecutorService.executeRecurringTask(new ScheduledTask(
                 new AutosaveTask(readWriteService, new ContentProvider() {
                 	private String lastRequestedText;
                     @Override
