@@ -10,5 +10,5 @@
 	<feature manual="selected" name="MultifileEditing"/>
 	<feature automatic="selected" manual="selected" name="SyntaxHighlighting"/>
 	<feature manual="selected" name="JavaSyntaxHighlighting"/>
-	<feature manual="selected" name="Autocompletion"/>
+	<feature name="Autocompletion"/>
 </configuration>
