@@ -1,10 +1,10 @@
 package spl.texteditor; 
 
+
 import java.io.File; 
 import java.util.Map; 
 
 import javafx.scene.control.MenuBar; 
-
 import org.fxmisc.richtext.CodeArea; 
 import org.slf4j.Logger; 
 import org.slf4j.LoggerFactory; 
@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import javafx.application.Platform; 
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler; 
-
 import javafx.fxml.FXML; 
 import javafx.scene.input.KeyEvent; 
 import javafx.scene.input.DragEvent; 
@@ -49,6 +48,15 @@ import javafx.beans.value.ChangeListener;
 import java.util.ArrayList; 
 import javafx.beans.value.ChangeListener; 
 import javafx.beans.value.ObservableValue; 
+import java.io.IOException; 
+import java.io.BufferedReader; 
+import java.io.FileReader; 
+import javafx.scene.control.ListView; 
+import javafx.collections.ObservableList; 
+import javafx.collections.FXCollections; 
+import javafx.stage.Popup; 
+import spl.texteditor.dialogs.FindDialog; 
+import spl.texteditor.dialogs.FindResult; 
 
 public   class  PrimaryController {
 	
@@ -120,7 +128,6 @@ public   class  PrimaryController {
     }
 
 	
-	
 
     @FXML
     public void onKeyPressed(KeyEvent event) {
@@ -130,18 +137,12 @@ public   class  PrimaryController {
             Dialog<FindResult> findDialog = new FindDialog();
             final FindResult result = findDialog.openAndWait(Map.of());
             if (result.isValid()) {
-            	String allText = textArea.getText();
-            	String ttf = result.getTextToFind();
-            	if(!result.getCaseSensitive()) {
-            		allText = allText.toLowerCase();
-            		ttf = ttf.toLowerCase();
+            	if(result.getCaseSensitive()) {
+            		textArea.replaceText(textArea.getText().replace(result.getTextToFind(), result.getReplacementText()));
             	}
-            	int indexOfWord = allText.indexOf(ttf);
-            	while (indexOfWord >= 0) {
-            		LOGGER.info("Found word and highlighting it");
-            		textArea.setStyleClass(indexOfWord, indexOfWord+ttf.length(), "-fx-font-color: red;");
-            		indexOfWord = allText.indexOf(ttf, indexOfWord+ttf.length());
-        		}
+            	else {
+            		textArea.replaceText(textArea.getText().replaceAll("(?i)"+result.getTextToFind(), result.getReplacementText()));
+            	}
             }
         }
     }
@@ -192,7 +193,7 @@ public   class  PrimaryController {
 	
 	
 	@FXML
-    protected void initialize() {
+     private void  initialize__wrappee__MultifileEditing() {
 		LOGGER.warn("Initialising.");
 		// Remove the current content
         anchor.getChildren().remove(0);
@@ -222,6 +223,68 @@ public   class  PrimaryController {
         addButton.relocate(600, 0);
         addButton.setOnAction(addEvent);
     }
+
+	
+    
+	@FXML
+    protected void initialize() {
+		initialize__wrappee__MultifileEditing();
+		String[] wordsInFile = new String[]{};
+		try {
+			wordsInFile = getAutocompletionWords("src/main/java/spl/texteditor/AutocompletionWords.txt");
+			}
+			catch(Exception e) {
+				LOGGER.warn("Could not read file for autocompletion words");
+				System.out.println(e.toString());
+				return;
+			}
+		String[] autowords = wordsInFile;
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        ObservableList<String> fil = FXCollections.observableArrayList();        
+        
+		((CodeArea)tabpane.getSelectionModel().getSelectedItem().getContent()).textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+            	popup.getContent().clear();
+            	popup.hide();
+                CodeArea sto = ((CodeArea)tabpane.getSelectionModel().getSelectedItem().getContent());
+                String curr = "";
+                for (int i = sto.getAnchor(); i > 0; i--) {
+                    if (sto.getText().charAt(i) == '\n' || sto.getText().charAt(i) == ' ') {
+                        break;
+                    }else {
+                        curr = sto.getText().charAt(i) + curr;
+                    }
+                }
+                if(curr != "" && curr != " ") {
+                	setCurLength(curr);
+                    fil.clear();
+                    for (int i = 0; i < autowords.length; i++) {
+                    	if(autowords[i].startsWith(curr)) {
+                    		fil.add(autowords[i]);
+                    	}
+                    }
+                    if(!fil.isEmpty()) {
+                        ListView<String> list = new ListView<String>();
+                        list.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            public void handle(KeyEvent ke) {
+                            	if(ke.getCode().equals(KeyCode.ENTER)) {
+                                    String autocompleteString = list.getSelectionModel().getSelectedItem().substring(getCurLength()) + " ";
+                            		textArea.insertText(textArea.getCaretPosition(), autocompleteString);
+                            		popup.hide();
+                            	}
+                            }
+                        });
+                        list.getItems().addAll(fil);
+                        popup.getContent().addAll(list);
+                        popup.show(textArea, textArea.getCaretBounds().get().getMaxX(), textArea.getCaretBounds().get().getMaxY());
+                    }
+                }
+            } 
+        });
+	}
 
 	
     private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
@@ -264,6 +327,36 @@ public   class  PrimaryController {
             
         }
     };
+
+	
+    private int curLength;
+
+	
+    
+    public void setCurLength(String cur) {
+    	curLength = cur.length();
+    }
+
+	
+    
+    public int getCurLength() {
+    	return curLength;
+    }
+
+	
+	
+	public String[] getAutocompletionWords(String filename) throws IOException {
+		FileReader fileReader = new FileReader(filename);
+		
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		List<String> lines = new ArrayList<String>();
+		String line = null;
+		while((line = bufferedReader.readLine()) != null) {
+			lines.add(line);
+		}
+		bufferedReader.close();
+		return lines.toArray(new String[lines.size()]);
+	}
 
 
 }

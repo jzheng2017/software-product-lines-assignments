@@ -3,12 +3,12 @@
 	<feature automatic="selected" name="texteditor"/>
 	<feature automatic="selected" name="Base"/>
 	<feature automatic="selected" name="PluginSystem"/>
-	<feature manual="selected" name="Find"/>
-	<feature name="Replace"/>
+	<feature automatic="selected" manual="selected" name="Find"/>
+	<feature manual="selected" name="Replace"/>
 	<feature manual="selected" name="Autosaving"/>
 	<feature manual="selected" name="FileDragAndDrop"/>
 	<feature manual="selected" name="MultifileEditing"/>
-	<feature name="SyntaxHighlighting"/>
-	<feature name="JavaSyntaxHighlighting"/>
-	<feature name="PythonSyntaxHighlighting"/>
+	<feature automatic="selected" manual="selected" name="SyntaxHighlighting"/>
+	<feature manual="selected" name="JavaSyntaxHighlighting"/>
+	<feature manual="selected" name="Autocompletion"/>
 </configuration>
