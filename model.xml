@@ -24,8 +24,8 @@
 			<and abstract="true" name="SyntaxHighlighting">
 				<graphics key="collapsed" value="false"/>
 				<feature name="JavaSyntaxHighlighting"/>
-				<feature name="PythonSyntaxHighlighting"/>
 			</and>
+			<feature name="Autocompletion"/>
 		</and>
 	</struct>
 </featureModel>
