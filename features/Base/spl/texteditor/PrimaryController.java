@@ -40,7 +40,6 @@ public class PrimaryController {
     
     @FXML
     public void onOpenFileAction() {
-        System.out.println(menuBar);
         Dialog<File> fileDialog = new OpenFileDialog(stage);
         File file = fileDialog.openAndWait(Map.of());
         

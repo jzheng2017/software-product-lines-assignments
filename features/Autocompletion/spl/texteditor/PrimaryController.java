@@ -6,37 +6,28 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import javafx.scene.control.MenuBar;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Popup;
 import org.fxmisc.richtext.CodeArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.control.ListView;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import javafx.stage.Popup;
-import spl.texteditor.dialogs.Dialog;
-import spl.texteditor.dialogs.FindDialog;
-import spl.texteditor.dialogs.FindResult;
-import spl.texteditor.dialogs.SaveFileDialog;
-import spl.texteditor.dialogs.OpenFileDialog;
-import spl.texteditor.storage.LocalFileSystemReadWriteService;
-import spl.texteditor.storage.ReadWriteService;
-
 public class PrimaryController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryController.class);
+
+	@FXML
+	public CodeArea textArea;
     private int curLength;
     
     public void setCurLength(String cur) {
@@ -62,18 +53,16 @@ public class PrimaryController {
 		String[] autowords = wordsInFile;
         Popup popup = new Popup();
         popup.setAutoHide(true);
-        ObservableList<String> fil = FXCollections.observableArrayList();        
+        ObservableList<String> fil = FXCollections.observableArrayList();
         
-		((CodeArea)tabpane.getSelectionModel().getSelectedItem().getContent()).textProperty().addListener(new ChangeListener<String>()
-        {
+        textArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+            public void changed(ObservableValue observableValue, String s, String s2) {
             	popup.getContent().clear();
             	popup.hide();
-                CodeArea sto = ((CodeArea)tabpane.getSelectionModel().getSelectedItem().getContent());
                 String curr = "";
-                for (int i = sto.getAnchor(); i > 0; i--) {
-                	String allText = sto.getText();
+                for (int i = textArea.getAnchor(); i > 0; i--) {
+                	String allText = textArea.getText();
                 	if(i < allText.length()) {
                         if (allText.charAt(i) == '\n' || allText.charAt(i) == ' ') {
                             break;
@@ -109,6 +98,7 @@ public class PrimaryController {
             } 
         });
 	}
+	
 	
 	public String[] getAutocompletionWords(String filename) throws IOException {
 		FileReader fileReader = new FileReader(filename);

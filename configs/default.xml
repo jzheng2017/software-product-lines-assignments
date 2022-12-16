@@ -7,8 +7,8 @@
 	<feature manual="selected" name="Replace"/>
 	<feature manual="selected" name="Autosaving"/>
 	<feature manual="selected" name="FileDragAndDrop"/>
-	<feature manual="selected" name="MultifileEditing"/>
-	<feature automatic="selected" manual="selected" name="SyntaxHighlighting"/>
-	<feature manual="selected" name="JavaSyntaxHighlighting"/>
-	<feature name="Autocompletion"/>
+	<feature name="MultifileEditing"/>
+	<feature name="SyntaxHighlighting"/>
+	<feature name="JavaSyntaxHighlighting"/>
+	<feature manual="selected" name="Autocompletion"/>
 </configuration>
