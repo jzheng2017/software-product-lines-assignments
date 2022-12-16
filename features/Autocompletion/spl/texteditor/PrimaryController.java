@@ -73,11 +73,14 @@ public class PrimaryController {
                 CodeArea sto = ((CodeArea)tabpane.getSelectionModel().getSelectedItem().getContent());
                 String curr = "";
                 for (int i = sto.getAnchor(); i > 0; i--) {
-                    if (sto.getText().charAt(i) == '\n' || sto.getText().charAt(i) == ' ') {
-                        break;
-                    }else {
-                        curr = sto.getText().charAt(i) + curr;
-                    }
+                	String allText = sto.getText();
+                	if(i < allText.length()) {
+                        if (allText.charAt(i) == '\n' || allText.charAt(i) == ' ') {
+                            break;
+                        }else {
+                            curr = allText.charAt(i) + curr;
+                        }
+                	}
                 }
                 if(curr != "" && curr != " ") {
                 	setCurLength(curr);
