@@ -7,3 +7,8 @@ long
 float
 double
 String
+public
+private
+static
+void
+class

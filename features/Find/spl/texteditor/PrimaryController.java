@@ -36,8 +36,6 @@ public class PrimaryController {
 	
     @FXML
     public void onKeyPressed(KeyEvent event) {
-    	// REMOVE AFTER
-    	//CodeArea textArea;
     	List<Selection> highlightedWords = new ArrayList<Selection>();
         KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
         if (ctrlAndF.match(event)) {
