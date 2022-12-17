@@ -2,18 +2,11 @@ package spl.texteditor;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.Map;
-import java.util.Collections;
-import java.util.List;
-import java.util.Arrays;
+import java.util.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -21,10 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import spl.texteditor.dialogs.*;
 import spl.texteditor.dialogs.Dialog;
-import spl.texteditor.dialogs.SaveFileDialog;
-import spl.texteditor.dialogs.OpenFileDialog;
-import spl.texteditor.storage.LocalFileSystemReadWriteService;
-import spl.texteditor.storage.ReadWriteService;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.Selection;
@@ -33,7 +22,6 @@ import org.fxmisc.richtext.SelectionImpl;
 public class PrimaryController {
 	
 	public int highlightIncrementer = 0;
-	
     @FXML
     public void onKeyPressed(KeyEvent event) {
     	List<Selection> highlightedWords = new ArrayList<Selection>();
@@ -60,16 +48,16 @@ public class PrimaryController {
         		}
             }
         }
-		((CodeArea)tabpane.getSelectionModel().getSelectedItem().getContent()).textProperty().addListener(new ChangeListener<String>()
+		textArea.getContent().textProperty().addListener(new ChangeListener()
         {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-            	for (Selection word : highlightedWords) {
-            		  word.deselect();
-            		  word.dispose();
-            		}
-            	highlightedWords.clear();
-            } 
+			@Override
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				for (Selection word : highlightedWords) {
+					word.deselect();
+					word.dispose();
+				}
+				highlightedWords.clear();
+			}
         });
     }
     

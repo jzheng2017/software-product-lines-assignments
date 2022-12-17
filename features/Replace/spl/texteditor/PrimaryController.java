@@ -18,10 +18,8 @@ import spl.texteditor.storage.LocalFileSystemReadWriteService;
 import spl.texteditor.storage.ReadWriteService;
 
 public class PrimaryController {
-
     @FXML
     public void onKeyPressed(KeyEvent event) {
-    	
         KeyCombination ctrlAndF = new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN);
         if (ctrlAndF.match(event)) {
             Dialog<FindResult> findDialog = new FindDialog();
