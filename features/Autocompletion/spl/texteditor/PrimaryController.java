@@ -20,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Popup;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.NavigationActions.SelectionPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,7 @@ public class PrimaryController {
     }
     
 	@FXML
-    protected void initialize() {
+    public void initialize() {
 		original();
 		String[] wordsInFile = new String[]{};
 		try {
@@ -60,42 +61,38 @@ public class PrimaryController {
             public void changed(ObservableValue observableValue, String s, String s2) {
             	popup.getContent().clear();
             	popup.hide();
-                String curr = "";
-                for (int i = textArea.getAnchor(); i > 0; i--) {
-                	String allText = textArea.getText();
-                	if(i < allText.length()) {
-                        if (allText.charAt(i) == '\n' || allText.charAt(i) == ' ') {
-                            break;
-                        }else {
-                            curr = allText.charAt(i) + curr;
+                
+                String content = textArea.getText();
+                if (!content.isBlank()) {
+                    content = content.substring(0, textArea.getAnchor()+1);
+                    String curr = content.substring(content.lastIndexOf(" ")+1);
+                    if(!curr.isBlank()) {
+                    	setCurLength(curr);
+                        fil.clear();
+                        for (int i = 0; i < autowords.length; i++) {
+                        	if(autowords[i].startsWith(curr)) {
+                        		fil.add(autowords[i]);
+                        	}
                         }
-                	}
-                }
-                if(curr != "" && curr != " ") {
-                	setCurLength(curr);
-                    fil.clear();
-                    for (int i = 0; i < autowords.length; i++) {
-                    	if(autowords[i].startsWith(curr)) {
-                    		fil.add(autowords[i]);
-                    	}
+                        if(!fil.isEmpty()) {
+                            ListView<String> list = new ListView<String>();
+                            list.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                public void handle(KeyEvent ke) {
+                                	if(ke.getCode().equals(KeyCode.ENTER)) {
+                                        String autocompleteString = list.getSelectionModel().getSelectedItem().substring(getCurLength()) + " ";
+                                		textArea.insertText(textArea.getCaretPosition(), autocompleteString);
+                                		ke.consume();
+                                		popup.hide();
+                                	}
+                                }
+                            });
+                            list.getItems().addAll(fil);
+                            popup.getContent().addAll(list);
+                            popup.show(textArea, textArea.getCaretBounds().get().getMaxX(), textArea.getCaretBounds().get().getMaxY());
+                        }
                     }
-                    if(!fil.isEmpty()) {
-                        ListView<String> list = new ListView<String>();
-                        list.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                            public void handle(KeyEvent ke) {
-                            	if(ke.getCode().equals(KeyCode.ENTER)) {
-                                    String autocompleteString = list.getSelectionModel().getSelectedItem().substring(getCurLength()) + " ";
-                            		textArea.insertText(textArea.getCaretPosition(), autocompleteString);
-                            		popup.hide();
-                            	}
-                            }
-                        });
-                        list.getItems().addAll(fil);
-                        popup.getContent().addAll(list);
-                        popup.show(textArea, textArea.getCaretBounds().get().getMaxX(), textArea.getCaretBounds().get().getMaxY());
-                    }
-                }
-            } 
+                } 
+            }
         });
 	}
 	

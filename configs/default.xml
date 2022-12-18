@@ -5,8 +5,8 @@
 	<feature automatic="selected" name="PluginSystem"/>
 	<feature name="Find"/>
 	<feature name="Replace"/>
-	<feature manual="selected" name="Autosaving"/>
+	<feature name="Autosaving"/>
 	<feature name="FileDragAndDrop"/>
-	<feature manual="selected" name="MultifileEditing"/>
-	<feature name="Autocompletion"/>
+	<feature name="MultifileEditing"/>
+	<feature manual="selected" name="Autocompletion"/>
 </configuration>

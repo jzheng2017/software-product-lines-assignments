@@ -29,7 +29,7 @@ public class PrimaryController {
 
 	private MultiTabTextAreaManager multiTabTextAreaManager;
 	@FXML
-    void initialize() {
+    public void initialize() {
         multiTabTextAreaManager = new MultiTabTextAreaManager(tabpane);
         anchor.getChildren().remove(0);
         anchor.getChildren().add(tabpane);

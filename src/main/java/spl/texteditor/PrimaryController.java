@@ -1,5 +1,6 @@
 package spl.texteditor; 
 
+
 import java.io.File; 
 import java.util.Map; 
 
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import javafx.application.Platform; 
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler; 
-
 import javafx.fxml.FXML; 
 import javafx.scene.input.KeyEvent; 
 import javafx.scene.input.DragEvent; 
@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent; 
 import javafx.stage.Stage; 
 import spl.texteditor.dialogs.Dialog; 
+
 import spl.texteditor.dialogs.SaveFileDialog; 
 import spl.texteditor.dialogs.OpenFileDialog; 
 import spl.texteditor.storage.LocalFileSystemReadWriteService; 
@@ -28,25 +29,28 @@ import spl.texteditor.storage.ReadWriteService;
 import spl.texteditor.plugin.core.PluginManager; 
 import spl.texteditor.plugin.core.pf4j.Pf4JPluginManager; 
 import spl.texteditor.plugin.core.pf4j.TextAreaExtensionPointProcessor; 
-import javafx.scene.control.TextArea; 
+import java.io.IOException; 
+import java.io.BufferedReader; 
+import java.io.FileReader; 
+import java.util.ArrayList; 
+import java.util.List; 
 
-import java.util.Objects; 
-import java.util.concurrent.Future; 
-import java.util.concurrent.ScheduledFuture; 
-import java.util.concurrent.TimeUnit; 
-import spl.texteditor.tasks.*; 
-
-import javafx.scene.control.Tab; 
-import javafx.scene.control.TabPane; 
-import javafx.scene.control.Button; 
+import javafx.beans.value.ChangeListener; 
+import javafx.beans.value.ObservableValue; 
+import javafx.collections.FXCollections; 
+import javafx.collections.ObservableList; 
+import javafx.scene.control.ListView; 
+import javafx.stage.Popup; 
+import org.fxmisc.richtext.NavigationActions.SelectionPolicy; 
 
 public   class  PrimaryController {
 	
-    private static final Logger LOGGER  = LoggerFactory.getLogger(PrimaryController.class);
+	private static final Logger LOGGER  = LoggerFactory.getLogger(PrimaryController.class);
 
 	
-    @FXML
-    private CodeArea textArea;
+
+	@FXML
+	public CodeArea textArea;
 
 	
     
@@ -58,7 +62,7 @@ public   class  PrimaryController {
     private Stage stage;
 
 	
-    private ReadWriteService readWriteService  = new LocalFileSystemReadWriteService();
+    private ReadWriteService readWriteService = new LocalFileSystemReadWriteService();
 
 	
     
@@ -68,12 +72,7 @@ public   class  PrimaryController {
         File file = fileDialog.openAndWait(Map.of());
         
         if(file != null) {
-            final CodeAreaWithTabAndReadWriteService currentActiveCodeAreaWithTabAndReadWriteService = multiTabTextAreaManager.getCurrentActiveCodeArea();
-            CodeArea codeArea = currentActiveCodeAreaWithTabAndReadWriteService.codeArea();
-            ReadWriteService readWriteService = currentActiveCodeAreaWithTabAndReadWriteService.readWriteService();
-            Tab tab = currentActiveCodeAreaWithTabAndReadWriteService.tab();
-            tab.setText(file.getName());
-        	codeArea.replaceText(readWriteService.read(file.getPath()));
+        	textArea.replaceText(readWriteService.read(file.getPath()));
         } else {
         	LOGGER.warn("No file was selected.");
         }
@@ -83,14 +82,10 @@ public   class  PrimaryController {
 
     @FXML
     public void onFileSave() {
-        final CodeAreaWithTabAndReadWriteService currentActiveCodeAreaWithTabAndReadWriteService = multiTabTextAreaManager.getCurrentActiveCodeArea();
-        CodeArea codeArea = currentActiveCodeAreaWithTabAndReadWriteService.codeArea();
-        ReadWriteService readWriteService = currentActiveCodeAreaWithTabAndReadWriteService.readWriteService();
-
         String lastFileRead = readWriteService.lastFileRead();
-        
+        String contents = textArea.getText();
         boolean isNewFile = lastFileRead == null || lastFileRead.isEmpty() || lastFileRead.isBlank();
-        final String contents = codeArea.getText();
+
         if (isNewFile) {
             Dialog<File> fileDialog = new SaveFileDialog(stage);
             File file = fileDialog.openAndWait(Map.of());
@@ -100,7 +95,7 @@ public   class  PrimaryController {
             	LOGGER.warn("Saving was cancelled.");
             }
         } else {
-        	readWriteService.write(lastFileRead, contents);
+            readWriteService.write(lastFileRead, contents);
         }
     }
 
@@ -153,46 +148,94 @@ public   class  PrimaryController {
     }
 
 	
+    
 	@FXML
-    void initialize() {
-        multiTabTextAreaManager = new MultiTabTextAreaManager(tabpane);
-        anchor.getChildren().remove(0);
-        anchor.getChildren().add(tabpane);
-        tabpane.setPrefSize(2000, 2000);
-        multiTabTextAreaManager.addTab("");
-        // Add buttons
-        Button addButton = new Button("+");
-        anchor.getChildren().add(addButton);
-        addButton.relocate(600, 0);
-        addButton.setOnAction(addEvent);
+    public void initialize() {
+		initialize__wrappee__PluginSystem();
+		String[] wordsInFile = new String[]{};
+		try {
+			wordsInFile = getAutocompletionWords("src/main/java/spl/texteditor/AutocompletionWords.txt");
+			}
+			catch(Exception e) {
+				LOGGER.warn("Could not read file for autocompletion words");
+				System.out.println(e.toString());
+				return;
+			}
+		String[] autowords = wordsInFile;
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        ObservableList<String> fil = FXCollections.observableArrayList();
+        
+        textArea.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String s, String s2) {
+            	popup.getContent().clear();
+            	popup.hide();
+                
+                String content = textArea.getText();
+                if (!content.isBlank()) {
+                    content = content.substring(0, textArea.getAnchor()+1);
+                    String curr = content.substring(content.lastIndexOf(" ")+1);
+                    if(!curr.isBlank()) {
+                    	setCurLength(curr);
+                        fil.clear();
+                        for (int i = 0; i < autowords.length; i++) {
+                        	if(autowords[i].startsWith(curr)) {
+                        		fil.add(autowords[i]);
+                        	}
+                        }
+                        if(!fil.isEmpty()) {
+                            ListView<String> list = new ListView<String>();
+                            list.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                                public void handle(KeyEvent ke) {
+                                	if(ke.getCode().equals(KeyCode.ENTER)) {
+                                        String autocompleteString = list.getSelectionModel().getSelectedItem().substring(getCurLength()) + " ";
+                                		textArea.insertText(textArea.getCaretPosition(), autocompleteString);
+                                		ke.consume();
+                                		popup.hide();
+                                	}
+                                }
+                            });
+                            list.getItems().addAll(fil);
+                            popup.getContent().addAll(list);
+                            popup.show(textArea, textArea.getCaretBounds().get().getMaxX(), textArea.getCaretBounds().get().getMaxY());
+                        }
+                    }
+                } 
+            }
+        });
+	}
+
+	
+    private int curLength;
+
+	
+    
+    public void setCurLength(String cur) {
+    	curLength = cur.length();
     }
 
 	
-    private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
-
-	
-
-    @FXML
-    private javafx.scene.layout.AnchorPane anchor;
-
-	
-	
-	@FXML
-	private TabPane tabpane = new TabPane();
-
-	
-
-	private MultiTabTextAreaManager multiTabTextAreaManager;
+    
+    public int getCurLength() {
+    	return curLength;
+    }
 
 	
 	
-	// Handle new tabs
-	EventHandler<ActionEvent> addEvent = new EventHandler<ActionEvent>() {
-        public void handle(ActionEvent e)
-        {
-            multiTabTextAreaManager.addTab("");
-        }
-    };
+	
+	public String[] getAutocompletionWords(String filename) throws IOException {
+		FileReader fileReader = new FileReader(filename);
+		
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		List<String> lines = new ArrayList<String>();
+		String line = null;
+		while((line = bufferedReader.readLine()) != null) {
+			lines.add(line);
+		}
+		bufferedReader.close();
+		return lines.toArray(new String[lines.size()]);
+	}
 
 
 }

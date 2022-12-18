@@ -34,7 +34,6 @@ public class LocalFileSystemReadWriteService implements ReadWriteService {
 
         try {
             String s = (String)taskExecutorService.executeTask(new ScheduledTask(new ReadFileTask(identifier), 0, false)).get(5L, TimeUnit.SECONDS);
-            System.out.println(s);
             return s;
         } catch (Exception e) {
             LOGGER.warn("Could not read contents of file '{}'", identifier);

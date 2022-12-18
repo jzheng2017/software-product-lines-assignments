@@ -24,7 +24,7 @@ public class PrimaryController {
     private TaskExecutorService taskExecutorService = new ScheduledTaskExecutorService();
 
     @FXML
-    void initialize() {
+    public void initialize() {
         original();
         taskExecutorService.executeRecurringTask(new ScheduledTask(
                 new AutosaveTask(readWriteService, new ContentProvider() {
